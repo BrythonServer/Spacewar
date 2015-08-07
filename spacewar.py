@@ -171,8 +171,7 @@ class Ship1(Ship):
         super().__init__(Ship1.asset, app, position, velocity, sun)
         self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
         
-    def step():
-        print("b")
+    def step(self):
         super().step()
         #collides = self.collidingWithSprites(Ship2)
         #if len(collides):
@@ -188,7 +187,7 @@ class Ship2(Ship):
         super().__init__(Ship2.asset, app, position, velocity, sun)
         self.registerKeys(["a", "d", "w", "space"])
 
-    def step():
+    def step(self):
         super().step()
         #collides = self.collidingWithSprites(Ship1)
         #if len(collides):
@@ -208,7 +207,6 @@ class Spacewar(App):
         self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,4), self.sun)
         
     def step(self):
-        print("a")
         self.ship1.step()
         self.ship2.step()
 
