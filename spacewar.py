@@ -62,7 +62,7 @@ class GravitySprite(Sprite):
         vx = self.vx
         vy = self.vy
         self.vx += (Ag.x + self.thrust*GravitySprite.T*math.sin(self.rotation))* dt
-        self.vy += (Ag.y + self.thrust*GravitySprite.T*math.cos(self.rotation))* dt
+        self.vy += (Ag.y - self.thrust*GravitySprite.T*math.cos(self.rotation))* dt
         self.x += self.vx + 0.5*Ag.x*dt*dt
         self.y += self.vy + 0.5*Ag.y*dt*dt
         
