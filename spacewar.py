@@ -94,6 +94,14 @@ class Bullet(GravitySprite):
             super().step()
             if self.collidingWith(self.sun):
                 self.visible = False
+            ships = self.collidingWithSprites(Ship1).extend(self.collidingWithSprites(Ship2))
+            if len(ships):
+                if not self.firing:
+                    ships[0].explode()
+                self.visible = False
+            elif self.firing:
+                self.firing = False
+                
         elif self.visible:
             self.visible = False
         
@@ -155,15 +163,14 @@ class Ship(GravitySprite):
         for bullet in self.bullets:
             bullet.step()
         bullets = self.collidingWithSprites(Bullet)
-        for bullet in bullets:
-            if bullet.visible:
-                if self.collidingWith(bullet):
-                    if not bullet.firing:
-                        bullet.visible = False
-                        print("Hit by bullet!")
-                        self.explode()
-                elif bullet.firing:
-                    bullet.firing = False
+        #for bullet in bullets:
+        #    if bullet.visible:
+        #        if self.collidingWith(bullet) and not bullet.firing:
+        #                bullet.visible = False
+        #                print("Hit by bullet!")
+        #                self.explode()
+        #        elif bullet.firing:
+        #            bullet.firing = False
         if self.collidingWith(self.sun):
             self.explode()
             print("Hit the sun!")
