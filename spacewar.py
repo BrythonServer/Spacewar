@@ -1,6 +1,8 @@
 from ggame import App, Sprite, ImageAsset, Frame
 import math
+import window
 
+print(window.innerheight)
 
 class Stars(Sprite):
 
@@ -97,6 +99,6 @@ class Spacewar(App):
         self.ship2.step()
 
 
-app = Spacewar(1000,800)
+app = Spacewar(0,0)
 app.run()
 
