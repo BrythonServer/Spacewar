@@ -172,6 +172,7 @@ class Ship1(Ship):
         self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
         
     def step():
+        print("b")
         super().step()
         #collides = self.collidingWithSprites(Ship2)
         #if len(collides):
