@@ -319,8 +319,8 @@ class Sprite(object):
         self.ymin = int(self.y - self.fycenter * self.height)
         self.ymax = int(self.y + (1 - self.fycenter) * self.height)
         self.radius = int((self.width + self.height)/4)
-        self.xcenter = int(self.x + (1 - self.fxcenter) * self.width / 2)
-        self.ycenter = int(self.y + (1 - self.fycenter) * self.height / 2)
+        #self.xcenter = int(self.x + (1 - self.fxcenter) * self.width / 2)
+        #self.ycenter = int(self.y + (1 - self.fycenter) * self.height / 2)
 
     def firstImage(self):
         self.GFX.texture = self.asset[0]
@@ -495,7 +495,7 @@ class Sprite(object):
         if self is obj:
             return False
         elif self._collisionStyle == obj._collisionStyle == type(self)._circCollision:
-            dist2 = (self.xcenter - obj.xcenter)**2 + (self.ycenter - obj.ycenter)**2
+            dist2 = (self.x - obj.x)**2 + (self.y - obj.y)**2
             return dist2 < (self.radius + obj.radius)**2
         else:
             return (not (self.xmin > obj.xmax
