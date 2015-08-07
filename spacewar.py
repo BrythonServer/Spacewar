@@ -63,7 +63,8 @@ class Ship1(Sprite):
     # ship is at 227,0 pixels
     width = 292-227
     height = 92
-    asset = ImageAsset("four_spaceship_by_albertov.png", 1, Frame(227,0,292-227,92))
+    asset = ImageAsset("four_spaceship_by_albertov.png", 
+        Frame(227,0,292-227,92), 1)
         
     def __init__(self, position, velocity, sun):
         super().__init__(Ship1.asset, position, velocity, sun)
