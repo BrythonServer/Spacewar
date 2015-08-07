@@ -75,7 +75,7 @@ class Ship(GravitySprite):
     def __init__(self, asset, app, position, velocity, sun):
         super().__init__(asset, position, velocity, sun)
         self.app = app
-        bullets = []
+        self.bullets = []
         for i in range(Ship.bullets):
             bullets.append(Bullet(app, sun))
 
@@ -134,7 +134,6 @@ class Bullet(GravitySprite):
         self.vy = velocity[1]
         self.time = time*30
         self.visible = True
-        print("shoot")
 
     def step(self):
         if self.time > 0:
