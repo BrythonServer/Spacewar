@@ -172,7 +172,6 @@ class Ship(GravitySprite):
             print("Hit the sun!")
 
     def explode(self):
-        print("boom: ", type(self))
         self.reset()
         
     def reset(self):
