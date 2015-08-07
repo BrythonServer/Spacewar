@@ -17,7 +17,8 @@ class Spacewar(App):
         sh = star1.height
         for x in range(width//sw + 1):
             for y in range(height//sh + 1):
-                Stars((x*sw, y*sh))
+                print(x*sw, y*sh)
+                #Stars((x*sw, y*sh))
         #star1.destroy()
         
-Spacewar(800,600).run()
+Spacewar(800,600)
