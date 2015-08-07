@@ -18,6 +18,6 @@ class Spacewar(App):
         for x in range(width//sw + 1):
             for y in range(height//sh + 1):
                 Stars((x*sw, y*sh))
-        star1.destroy()
+        #star1.destroy()
         
 Spacewar(800,600).run()
