@@ -173,10 +173,10 @@ class Ship1(Ship):
         
     def step():
         super().step()
-        collides = self.collidingWithSprites(Ship2)
-        if len(collides):
-            collides.explode()
-            self.explode()
+        #collides = self.collidingWithSprites(Ship2)
+        #if len(collides):
+        #    collides.explode()
+        #    self.explode()
         
 class Ship2(Ship):
     
@@ -189,10 +189,10 @@ class Ship2(Ship):
 
     def step():
         super().step()
-        collides = self.collidingWithSprites(Ship1)
-        if len(collides):
-            collides.explode()
-            self.explode()
+        #collides = self.collidingWithSprites(Ship1)
+        #if len(collides):
+        #    collides.explode()
+        #    self.explode()
     
 
 class Spacewar(App):
