@@ -55,8 +55,7 @@ class GravitySprite(Sprite):
         self.x += self.vx
         self.y += self.vy
         self.vx += Ag.x
-        self.vy ++ Ag.y
-        print("Here I am...")
+        self.vy += Ag.y
 
 class Ship1(GravitySprite):
     
@@ -81,7 +80,6 @@ class Spacewar(App):
         
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
-        print("Here I am...")
         self.ship1.step()
 
 
