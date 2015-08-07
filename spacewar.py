@@ -76,7 +76,7 @@ class Spacewar(App):
         for x in range(width//Stars.width + 1):
             for y in range(height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
-        sun = Sun((width/2 - Sun.width/2, height/2 - Sun.height/2))
+        self.sun = Sun((width/2 - Sun.width/2, height/2 - Sun.height/2))
         self.ship1 = Ship1((500,300), (0,-5), self.sun)
         
     def step(self):
