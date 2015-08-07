@@ -21,6 +21,7 @@ class Sun(Sprite):
         self.mass = 30*1000
         self.fxcenter = 0.5
         self.fycenter = 0.5
+        self.circularCollisionModel()
 
 class Vector(object):
     
@@ -65,6 +66,35 @@ class GravitySprite(Sprite):
         self.vy += (Ag.y - self.thrust*GravitySprite.T*math.cos(self.rotation))* dt
         self.x += self.vx + 0.5*Ag.x*dt*dt
         self.y += self.vy + 0.5*Ag.y*dt*dt
+
+
+class Bullet(GravitySprite):
+    
+    asset = ImageAsset("blast.png", Frame(0,0,8,8), 8)
+    
+    def __init__(self, app, sun):
+        super().__init__(Bullet.asset, (0,0), (0,0), sun)
+        self.visible = False
+        self.time = 0
+        self.circularCollisionModel()
+        
+    def shoot(self, position, velocity, time):
+        self.position = position
+        self.vx = velocity[0]
+        self.vy = velocity[1]
+        self.time = time*30
+        self.visible = True
+
+    def step(self):
+        if self.time > 0:
+            self.time -= 1
+            self.nextImage(True)
+            super().step()
+            if self.collidingWith(sun):
+                self.visible = False
+        elif self.visible:
+            self.visible = False
+        
         
 
 class Ship(GravitySprite):
@@ -78,6 +108,7 @@ class Ship(GravitySprite):
         for i in range(Ship.bullets):
             self.bullets.append(Bullet(app, sun))
         super().__init__(asset, position, velocity, sun)
+        self.circularCollisionModel()
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
@@ -119,33 +150,18 @@ class Ship(GravitySprite):
         self.rotation += self.rrate
         for bullet in self.bullets:
             bullet.step()
+        bullets = self.collidingWithSprites(Bullet)
+        for bullet in bullets:
+            if bullet.visible:
+                if self.collidingWith(bullet):
+                    bullet.visible = False
+                    print("Hit by bullet!")
+        if self.collidingWith(sun):
+            print("Hit the sun!")
 
+    def explode(self):
+        print("boom: ", type(self))
             
-class Bullet(GravitySprite):
-    
-    asset = ImageAsset("blast.png", Frame(0,0,8,8), 8)
-    
-    def __init__(self, app, sun):
-        super().__init__(Bullet.asset, (0,0), (0,0), sun)
-        self.visible = False
-        self.time = 0
-        
-    def shoot(self, position, velocity, time):
-        self.position = position
-        self.vx = velocity[0]
-        self.vy = velocity[1]
-        self.time = time*30
-        self.visible = True
-
-    def step(self):
-        if self.time > 0:
-            self.time -= 1
-            self.nextImage(True)
-            super().step()
-        elif self.visible:
-            self.visible = False
-        
-
 class Ship1(Ship):
     
     asset = ImageAsset("four_spaceship_by_albertov.png", 
@@ -155,6 +171,13 @@ class Ship1(Ship):
         super().__init__(Ship1.asset, app, position, velocity, sun)
         self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
         
+    def step()
+        super().step()
+        collides = self.collidingWithSprites(Ship2)
+        if len(collides):
+            collides.explode()
+            self.explode()
+        
 class Ship2(Ship):
     
     asset = ImageAsset("four_spaceship_by_albertov.png", 
@@ -163,6 +186,13 @@ class Ship2(Ship):
     def __init__(self, app, position, velocity, sun):
         super().__init__(Ship2.asset, app, position, velocity, sun)
         self.registerKeys(["a", "d", "w", "space"])
+
+    def step()
+        super().step()
+        collides = self.collidingWithSprites(Ship1)
+        if len(collides):
+            collides.explode()
+            self.explode()
     
 
 class Spacewar(App):
