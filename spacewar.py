@@ -70,16 +70,27 @@ class GravitySprite(Sprite):
 class Ship(GravitySprite):
 
     R = 2.0
+    bullets = 4
     
     def __init__(self, asset, app, position, velocity, sun):
         super().__init__(asset, position, velocity, sun)
         self.app = app
+        bullets = []
+        for i in range(Ship.bullets):
+            bullets.append(Bullet(app, sun))
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
         self.keymap = dict(zip(keys, commands))
         [self.app.listenKeyEvent("keydown", k, self.controldown) for k in keys]
         [self.app.listenKeyEvent("keyup", k, self.controlup) for k in keys]
+
+    def shootvector(self):
+        vel = 2
+        xv = vel*math.sin(self.rotation)
+        yv = vel*(-math.cos(self.rotation))
+        return xv, yv
+        
 
     def controldown(self, event):
         command = self.keymap[event.key]
@@ -89,6 +100,11 @@ class Ship(GravitySprite):
             self.rrate = Ship.R*0.01
         elif command == "forward":
             self.thrust = 0.1
+        elif command == "fire":
+            for bullet in bullets:
+                if bullet.time == 0:
+                    bullet.shoot(self.position, self.shootvector(), 15)
+                        
             
     def controlup(self, event):
         command = self.keymap[event.key]
@@ -102,7 +118,25 @@ class Ship(GravitySprite):
         self.rotation += self.rrate
 
             
-
+class Bullet(GravitySprite):
+    
+    asset = ImageAsset("blast.png", Frame(0,0,8,8), 8)
+    
+    def __init__(self, app, sun):
+        super().__init(Bullet.asset, (0,0), (0,0), sun)
+        self.visible = False
+        self.time = 0
+        
+    def shoot(self, position, velocity, time):
+        self.position = position
+        self.vx = velocity[0]
+        self.vy = velocity[1]
+        selt.time = time*Bullet.lifetime
+        
+    def step(self):
+        if self.time > 0:
+            self.time -= 1
+            super().step()
         
 
 class Ship1(Ship):
@@ -123,6 +157,7 @@ class Ship2(Ship):
         super().__init__(Ship2.asset, app, position, velocity, sun)
         self.registerKeys(["a", "d", "w", "space"])
     
+
 class Spacewar(App):
     
     def __init__(self, width, height):
