@@ -90,20 +90,21 @@ class Bullet(GravitySprite):
     def step(self):
         if self.time > 0:
             self.time -= 1
-            self.nextImage(True)
-            super().step()
-            if self.collidingWith(self.sun):
-                self.visible = False
-            ships = []
-            ships = self.collidingWithSprites(Ship1)
-            ships.extend(self.collidingWithSprites(Ship2))
-            #ships = self.collidingWithSprites(Ship1).extend(self.collidingWithSprites(Ship2))
-            if len(ships):
-                if not self.firing:
-                    ships[0].explode()
+            if self.visible:
+                self.nextImage(True)
+                super().step()
+                if self.collidingWith(self.sun):
                     self.visible = False
-            elif self.firing:
-                self.firing = False
+                ships = []
+                ships = self.collidingWithSprites(Ship1)
+                ships.extend(self.collidingWithSprites(Ship2))
+                if len(ships):
+                    if not self.firing:
+                        ships[0].explode()
+                        self.visible = False
+                elif self.firing:
+                    self.firing = False
+            
                 
         elif self.visible:
             self.visible = False
