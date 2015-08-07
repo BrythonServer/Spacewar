@@ -140,6 +140,7 @@ class Bullet(GravitySprite):
     def step(self):
         if self.time > 0:
             self.time -= 1
+            self.nextImage()
             super().step()
         elif self.visible:
             self.visible = False
