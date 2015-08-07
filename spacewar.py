@@ -46,6 +46,8 @@ class GravitySprite(Sprite):
         self.vx = velocity[0]
         self.vy = velocity[1]
         self.sun = sun
+        self.fxcenter = 0.5
+        self.fycenter = 0.5
         
     def step(self):
         dt = 0.033
@@ -77,7 +79,7 @@ class Ship2(GravitySprite):
     width = 86
     height = 92
     asset = ImageAsset("four_spaceship_by_albertov.png", 
-        Frame(0,0,Ship2.width,Ship2.height), 1)
+        Frame(0,0,86,92), 1)
         
     def __init__(self, position, velocity, sun):
         super().__init__(Ship2.asset, position, velocity, sun)
@@ -96,6 +98,7 @@ class Spacewar(App):
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
         self.ship1.step()
+        self.ship2.step()
 
 
 app = Spacewar(800,600)
