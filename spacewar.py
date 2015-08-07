@@ -117,6 +117,8 @@ class Ship(GravitySprite):
     def step(self):
         super().step()
         self.rotation += self.rrate
+        for bullet in self.bullets:
+            bullet.step()
 
             
 class Bullet(GravitySprite):
