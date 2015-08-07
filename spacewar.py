@@ -41,6 +41,7 @@ class Vector(object):
 class GravitySprite(Sprite):
     
     G = 1.0
+    T = 1.0
     
     def __init__(self, asset, position, velocity, sun):
         super().__init__(asset, position)
@@ -60,10 +61,11 @@ class GravitySprite(Sprite):
         Ag = Vector(Ur.x*ag, Ur.y*ag)
         vx = self.vx
         vy = self.vy
-        self.vx += Ag.x * dt
-        self.vy += Ag.y * dt
+        self.vx += (Ag.x + self.thrust*GravitySprite.T*math.sin(self.rotation))* dt
+        self.vy += (Ag.y + self.thrust*GravitySprite.T*math.cos(self.rotation))* dt
         self.x += self.vx + 0.5*Ag.x*dt*dt
         self.y += self.vy + 0.5*Ag.y*dt*dt
+        
 
 class Ship(GravitySprite):
     
