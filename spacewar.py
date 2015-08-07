@@ -90,8 +90,8 @@ class Bullet(GravitySprite):
             self.time -= 1
             self.nextImage(True)
             super().step()
-            if self.collidingWith(self.sun):
-                self.visible = False
+            #if self.collidingWith(self.sun):
+            #    self.visible = False
         elif self.visible:
             self.visible = False
         
@@ -151,13 +151,13 @@ class Ship(GravitySprite):
         for bullet in self.bullets:
             bullet.step()
         bullets = self.collidingWithSprites(Bullet)
-        for bullet in bullets:
-            if bullet.visible:
-                if self.collidingWith(bullet):
-                    bullet.visible = False
-                    print("Hit by bullet!")
-        if self.collidingWith(self.sun):
-            print("Hit the sun!")
+        #for bullet in bullets:
+        #    if bullet.visible:
+        #        if self.collidingWith(bullet):
+        #            bullet.visible = False
+        #            print("Hit by bullet!")
+        #if self.collidingWith(self.sun):
+        #    print("Hit the sun!")
 
     def explode(self):
         print("boom: ", type(self))
