@@ -58,7 +58,7 @@ class GravitySprite(Sprite):
         self.vy ++ Ag.y
         
 
-class Ship1(Sprite):
+class Ship1(GravitySprite):
     
     # ship is at 227,0 pixels
     width = 292-227
