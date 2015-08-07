@@ -20,7 +20,7 @@ class Spacewar(App):
     def __init__(self, width, height):
         super().__init__(width, height)
         star1 = Stars((0,0))
-        sun = Sun()
+        sun = Sun((400,300))
         sw = star1.GFX.width
         sh = star1.GFX.height
         star1.destroy()
