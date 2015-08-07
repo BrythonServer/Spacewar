@@ -170,6 +170,9 @@ class Ship(GravitySprite):
         if self.collidingWith(self.sun):
             self.explode()
             print("Hit the sun!")
+        if (self.x < -100 or self.x > self.app.width + 100 or
+            self.y < -100 or self.y > self.app.height + 100):
+            self.reset()
 
     def explode(self):
         self.reset()
