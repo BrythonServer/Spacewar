@@ -65,7 +65,7 @@ class GravitySprite(Sprite):
         self.x += self.vx + 0.5*Ag.x*dt*dt
         self.y += self.vy + 0.5*Ag.y*dt*dt
 
-class Ship(Gravity Sprite):
+class Ship(GravitySprite):
     
     def __init__(self, asset, app, position, velocity, sun):
         super().__init__(asset, position, velocity, sun)
@@ -127,8 +127,8 @@ class Spacewar(App):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((self.width/2, self.height/2))
-        self.ship1 = Ship1((self.width/2+100,self.height/2), (0,-4), self.sun)
-        self.ship2 = Ship2((self.width/2-100,self.height/2), (0,4), self.sun)
+        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-4), self.sun)
+        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,4), self.sun)
         
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
