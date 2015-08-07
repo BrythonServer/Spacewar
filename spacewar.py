@@ -19,7 +19,7 @@ class Sun(Sprite):
     
     def __init__(self, position):
         super().__init__(Sun.asset, position)
-        self.mass = 1000
+        self.mass = 30*1000
 
 class Vector(object):
     
@@ -71,6 +71,17 @@ class Ship1(GravitySprite):
     def __init__(self, position, velocity, sun):
         super().__init__(Ship1.asset, position, velocity, sun)
     
+class Ship2(GravitySprite):
+    
+    # ship is at 0,0 pixels
+    width = 86
+    height = 92
+    asset = ImageAsset("four_spaceship_by_albertov.png", 
+        Frame(0,0,Ship2.width,Ship2.height), 1)
+        
+    def __init__(self, position, velocity, sun):
+        super().__init__(Ship1.asset, position, velocity, sun)
+    
 class Spacewar(App):
     
     def __init__(self, width, height):
@@ -80,6 +91,7 @@ class Spacewar(App):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((width/2 - Sun.width/2, height/2 - Sun.height/2))
         self.ship1 = Ship1((500,300), (0,-2.5), self.sun)
+        self.ship2 = Ship2((300,300), (0,2.5), self.sun)
         
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
