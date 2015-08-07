@@ -19,6 +19,7 @@ class Spacewar(App):
             for y in range(height//sh + 1):
                 #print(x*sw, y*sh)
                 #Stars((x*sw, y*sh))
+                pass
         #star1.destroy()
         
 app = Spacewar(800,600)
