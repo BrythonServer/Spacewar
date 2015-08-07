@@ -49,6 +49,8 @@ class GravitySprite(Sprite):
         self.sun = sun
         self.fxcenter = 0.5
         self.fycenter = 0.5
+        self.rrate = 0.0
+        self.thrust = 0.0
         
     def step(self):
         dt = 0.033
@@ -63,21 +65,59 @@ class GravitySprite(Sprite):
         self.x += self.vx + 0.5*Ag.x*dt*dt
         self.y += self.vy + 0.5*Ag.y*dt*dt
 
-class Ship1(GravitySprite):
+class Ship(Gravity Sprite):
+    
+    def __init__(self, asset, app, position, velocity, sun):
+        super().__init__(asset, position, velocity, sun)
+        self.app = app
+
+    def registerKeys(self, keys):
+        commands = ["left", "right", "forward", "fire"]
+        self.keymap = dict(zip(keys, commands))
+        [self.app.listenKeyEvent("keydown", k, self.controldown) for k in keys]
+        [self.app.listenKeyEvent("keyup", k, self.controlup) for k in keys]
+
+    def controldown(self, event):
+        command = self.keymap[event.key]
+        if command == "left":
+            self.rrate = 0.01
+        elif command == "right":
+            self.rrate = -0.01
+        elif command == "forward":
+            self.thrust = 0.1
+            
+    def controlup(self, event):
+        command = self.keymap[event.key]
+        if command in ["left", "right"]:
+            self.rrate = 0.0
+        elif command == "forward":
+            self.thrust = 0.0
+            
+    def step(self):
+        super().step()
+        self.rotation += self.rrate
+
+            
+
+        
+
+class Ship1(Ship):
     
     asset = ImageAsset("four_spaceship_by_albertov.png", 
         Frame(227,0,292-227,92), 1)
         
-    def __init__(self, position, velocity, sun):
-        super().__init__(Ship1.asset, position, velocity, sun)
-    
-class Ship2(GravitySprite):
+    def __init__(self, app, position, velocity, sun):
+        super().__init__(Ship1.asset, app, position, velocity, sun)
+        self.registerKeys(["left", "right", "up", "enter"])
+        
+class Ship2(Ship):
     
     asset = ImageAsset("four_spaceship_by_albertov.png", 
         Frame(0,0,86,92), 1)
         
-    def __init__(self, position, velocity, sun):
-        super().__init__(Ship2.asset, position, velocity, sun)
+    def __init__(self, app, position, velocity, sun):
+        super().__init__(Ship2.asset, app, position, velocity, sun)
+        self.registerKeys(["a", "d", "w", "space"])
     
 class Spacewar(App):
     
