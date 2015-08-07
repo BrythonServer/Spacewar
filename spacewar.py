@@ -12,8 +12,9 @@ class Spacewar(App):
     
     def __init__(self, width, height):
         super().__init__(width, height)
-        for x in range(width//Stars.starasset.width + 1):
-            for y in range(height//Stars.starasset.height + 1):
+        star1 = Stars((0,0))
+        for x in range(1, width//Stars.starasset.width + 1):
+            for y in range(1, height//Stars.starasset.height + 1):
                 Stars((x*Stars.starasset.width, y*Stars.starasset.height))
         
 Spacewar(800,600).run()
