@@ -48,8 +48,8 @@ class GravitySprite(Sprite):
         self.vx = velocity[0]
         self.vy = velocity[1]
         self.sun = sun
-        #self.fxcenter = 0.5
-        #self.fycenter = 0.5
+        self.fxcenter = 0.5
+        self.fycenter = 0.5
         
     def step(self):
         dt = 0.033
