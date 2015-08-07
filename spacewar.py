@@ -171,7 +171,7 @@ class Ship1(Ship):
         super().__init__(Ship1.asset, app, position, velocity, sun)
         self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
         
-    def step()
+    def step():
         super().step()
         collides = self.collidingWithSprites(Ship2)
         if len(collides):
