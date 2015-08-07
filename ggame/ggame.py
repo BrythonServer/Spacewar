@@ -410,6 +410,7 @@ class Sprite(object):
         """
         try:
             return self.GFX.anchor.x
+            self._setExtents()
         except:
             return 0.0
         
