@@ -77,7 +77,7 @@ class Ship(GravitySprite):
         self.app = app
         self.bullets = []
         for i in range(Ship.bullets):
-            bullets.append(Bullet(app, sun))
+            self.bullets.append(Bullet(app, sun))
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
