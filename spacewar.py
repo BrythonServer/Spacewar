@@ -80,9 +80,9 @@ class Ship(GravitySprite):
     def controldown(self, event):
         command = self.keymap[event.key]
         if command == "left":
-            self.rrate = 0.01
-        elif command == "right":
             self.rrate = -0.01
+        elif command == "right":
+            self.rrate = 0.01
         elif command == "forward":
             self.thrust = 0.1
             
