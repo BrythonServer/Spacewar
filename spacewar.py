@@ -52,8 +52,8 @@ class GravitySprite(Sprite):
         Ur = R.unit()
         ag = GravitySprite.G*self.sun.mass/R.mag()**2
         Ag = Vector(Ur.x*ag, Ur.y*ag)
-        vx += self.vx
-        vy += self.vy
+        vx = self.vx
+        vy = self.vy
         self.vx += Ag.x
         self.vy += Ag.y
         self.x += (vx + self.vx)/2
