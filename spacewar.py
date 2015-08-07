@@ -175,7 +175,7 @@ class Ship1(Ship):
         super().step()
         collides = self.collidingWithSprites(Ship2)
         if len(collides):
-            collides.explode()
+            collides[0].explode()
             self.explode()
         
 class Ship2(Ship):
@@ -191,7 +191,7 @@ class Ship2(Ship):
         super().step()
         collides = self.collidingWithSprites(Ship1)
         if len(collides):
-            collides.explode()
+            collides[0].explode()
             self.explode()
     
 
