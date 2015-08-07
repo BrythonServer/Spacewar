@@ -207,7 +207,7 @@ class Spacewar(App):
         self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,4), self.sun)
         
     def step(self):
-        #for ship in self.getSpritesbyClass(Ship1
+        print("a")
         self.ship1.step()
         self.ship2.step()
 
