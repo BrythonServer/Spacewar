@@ -1,6 +1,5 @@
 from ggame import App, Sprite, ImageAsset, Frame
 import math
-from browser import window
 
 class Stars(Sprite):
 
