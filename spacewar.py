@@ -103,13 +103,13 @@ class Ship(GravitySprite):
     bullets = 2
     
     def __init__(self, asset, app, position, velocity, sun):
-        self.initposition = position
-        self.initvelocity = self.vx, self.vy
-        self.app = app
         self.bullets = []
         for i in range(Ship.bullets):
             self.bullets.append(Bullet(app, sun))
         super().__init__(asset, position, velocity, sun)
+        self.initposition = position
+        self.initvelocity = self.vx, self.vy
+        self.app = app
         self.circularCollisionModel()
 
     def registerKeys(self, keys):
