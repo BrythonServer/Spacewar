@@ -700,9 +700,9 @@ class App(object):
     def __init__(self, *args):
 
         if App.win == None and len(args) == 2:
-            self.width = args[0]
-            self.height = args[1]
-            App.win = GFX_Window(self.width, self.height, self.destroy)
+            App.win = GFX_Window(args[0], args[1], self.destroy)
+            self.width = App.win.width
+            self.height = App.win.height
             # Add existing sprites to the window
             if not App.spritesadded and len(App.spritelist) > 0:
                 App.spritesadded = True
