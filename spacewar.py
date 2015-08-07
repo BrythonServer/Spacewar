@@ -13,7 +13,7 @@ class Sun(Sprite):
     asset = ImageAsset("sun.png")
     
     def __init__(self, position):
-        super().__init__(Sun.asset, 400,300)
+        super().__init__(Sun.asset, position)
         
 class Spacewar(App):
     
