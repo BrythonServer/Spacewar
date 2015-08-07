@@ -1,4 +1,5 @@
 from ggame import App, Sprite, ImageAsset
+import math
 
 
 class Stars(Sprite):
@@ -18,7 +19,55 @@ class Sun(Sprite):
     
     def __init__(self, position):
         super().__init__(Sun.asset, position)
+        self.mass = 1000
+
+class Vector(object):
+    
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
         
+    def mag(self):
+        return math.sqrt(x**2 + y**2)
+    
+    def unit(self):
+        r = self.mag()
+        if r == 0:
+            return Vector(0,0)
+        else:
+            return Vector(self.x/r, self.y/r)
+
+class GravitySprite(Sprite):
+    
+    G = 1.0
+    
+    def __init__(self, position, velocity, sun):
+        super().__init__(position)
+        self.vx = velocity[0]
+        self.vy = velocity[1]
+        self.sun = sun
+        
+    def step(self):
+        R = Vector(self.sun.x-self.x, self.sun.y-self.y)
+        Ur = R.unit()
+        ag = Gravity.G*sun.mass/R.mag()**2
+        Ag = Vector(Ur.x*ag, Ur.y*ag)
+        self.x += self.vx
+        self.y += self.vy
+        self.vx += Ag.x
+        self.vy ++ Ag.y
+        
+
+class Ship1(Sprite):
+    
+    # ship is at 227,0 pixels
+    width = 292-227
+    height = 92
+    asset = ImageAsset("four_spaceship_by_albertov.png", 1, Frame(227,0,292-227,92))
+        
+    def __init__(self, position):
+        super().__init__(Ship1.asset, 
+    
 class Spacewar(App):
     
     def __init__(self, width, height):
@@ -30,8 +79,10 @@ class Spacewar(App):
 
         
     def step(self):
-        pass
-    
+        for ship in 
+
+
+
 app = Spacewar(800,600)
 app.run()
 
