@@ -89,7 +89,7 @@ class Ship(GravitySprite):
         vel = 2
         xv = vel*math.sin(self.rotation)
         yv = vel*(-math.cos(self.rotation))
-        return xv, yv
+        return xv + self.xv, yv + self.yv
         
 
     def controldown(self, event):
