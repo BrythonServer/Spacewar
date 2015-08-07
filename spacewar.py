@@ -103,6 +103,8 @@ class Ship(GravitySprite):
     bullets = 2
     
     def __init__(self, asset, app, position, velocity, sun):
+        self.initposition = position
+        self.initvelocity = self.vx, self.vy
         self.app = app
         self.bullets = []
         for i in range(Ship.bullets):
@@ -150,17 +152,25 @@ class Ship(GravitySprite):
         self.rotation += self.rrate
         for bullet in self.bullets:
             bullet.step()
-        #bullets = self.collidingWithSprites(Bullet)
-        #for bullet in bullets:
-        #    if bullet.visible:
-        #        if self.collidingWith(bullet):
-        #            bullet.visible = False
-        #            print("Hit by bullet!")
-        #if self.collidingWith(self.sun):
-        #    print("Hit the sun!")
+        bullets = self.collidingWithSprites(Bullet)
+        for bullet in bullets:
+            if bullet.visible:
+                if self.collidingWith(bullet):
+                    bullet.visible = False
+                    print("Hit by bullet!")
+                    self.explode()
+        if self.collidingWith(self.sun):
+            self.explode()
+            print("Hit the sun!")
 
     def explode(self):
         print("boom: ", type(self))
+        self.reset()
+        
+    def reset(self):
+        self.position = self.initposition
+        self.vx, self.vy = self.initvelocity
+
             
 class Ship1(Ship):
     
