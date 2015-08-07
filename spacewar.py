@@ -41,7 +41,7 @@ class Vector(object):
 class GravitySprite(Sprite):
     
     G = 1.0
-    T = 2.0
+    T = 3.0
     
     def __init__(self, asset, position, velocity, sun):
         super().__init__(asset, position)
@@ -68,6 +68,8 @@ class GravitySprite(Sprite):
         
 
 class Ship(GravitySprite):
+
+    R = 2.0
     
     def __init__(self, asset, app, position, velocity, sun):
         super().__init__(asset, position, velocity, sun)
@@ -82,9 +84,9 @@ class Ship(GravitySprite):
     def controldown(self, event):
         command = self.keymap[event.key]
         if command == "left":
-            self.rrate = -0.01
+            self.rrate = -0.01*Ship.R
         elif command == "right":
-            self.rrate = 0.01
+            self.rrate = Ship.R*0.01
         elif command == "forward":
             self.thrust = 0.1
             
