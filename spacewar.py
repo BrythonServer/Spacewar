@@ -19,12 +19,8 @@ class Spacewar(App):
     
     def __init__(self, width, height):
         super().__init__(width, height)
-        star1 = Stars((0,0))
+        self.star1 = Stars((0,0))
         sun = Sun((400,300))
-        sw = star1.GFX.width
-        sh = star1.GFX.height
-        star1.destroy()
-        print(sw, sh)
         sunw = sun.width
         sunh = sun.height
         print(sunw, sunh)
@@ -34,5 +30,13 @@ class Spacewar(App):
         #        Stars((x*sw, y*sh))
         #star1.destroy()
         
+    def step(self):
+        sw = self.star1.width
+        sh = self.star1.height
+        #star1.destroy()
+        print(sw, sh)
+        print(self.
+
 app = Spacewar(800,600)
+app.run()
 
