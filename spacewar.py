@@ -75,6 +75,7 @@ class Bullet(GravitySprite):
     def __init__(self, app, sun):
         super().__init__(Bullet.asset, (0,0), (0,0), sun)
         self.visible = False
+        self.firing = False
         self.time = 0
         self.circularCollisionModel()
         
@@ -84,14 +85,15 @@ class Bullet(GravitySprite):
         self.vy = velocity[1]
         self.time = time*30
         self.visible = True
+        self.firing = True
 
     def step(self):
         if self.time > 0:
             self.time -= 1
             self.nextImage(True)
             super().step()
-            #if self.collidingWith(self.sun):
-            #    self.visible = False
+            if self.collidingWith(self.sun):
+                self.visible = False
         elif self.visible:
             self.visible = False
         
@@ -156,9 +158,12 @@ class Ship(GravitySprite):
         for bullet in bullets:
             if bullet.visible:
                 if self.collidingWith(bullet):
-                    bullet.visible = False
-                    print("Hit by bullet!")
-                    self.explode()
+                    if not bullet.firing:
+                        bullet.visible = False
+                        print("Hit by bullet!")
+                        self.explode()
+                elif bullet.firing:
+                    bullet.firing = False
         if self.collidingWith(self.sun):
             self.explode()
             print("Hit the sun!")
