@@ -80,7 +80,7 @@ class Ship2(GravitySprite):
         Frame(0,0,Ship2.width,Ship2.height), 1)
         
     def __init__(self, position, velocity, sun):
-        super().__init__(Ship1.asset, position, velocity, sun)
+        super().__init__(Ship2.asset, position, velocity, sun)
     
 class Spacewar(App):
     
