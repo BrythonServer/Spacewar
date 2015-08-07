@@ -123,7 +123,7 @@ class Bullet(GravitySprite):
     asset = ImageAsset("blast.png", Frame(0,0,8,8), 8)
     
     def __init__(self, app, sun):
-        super().__init(Bullet.asset, (0,0), (0,0), sun)
+        super().__init__(Bullet.asset, (0,0), (0,0), sun)
         self.visible = False
         self.time = 0
         
