@@ -56,7 +56,7 @@ class GravitySprite(Sprite):
         self.y += self.vy
         self.vx += Ag.x
         self.vy ++ Ag.y
-        
+        print("Here I am...")
 
 class Ship1(GravitySprite):
     
