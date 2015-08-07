@@ -1,4 +1,4 @@
-from ggame import App, Sprite, ImageAsset
+from ggame import App, Sprite, ImageAsset, Frame
 import math
 
 
