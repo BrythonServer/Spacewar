@@ -131,12 +131,15 @@ class Bullet(GravitySprite):
         self.position = position
         self.vx = velocity[0]
         self.vy = velocity[1]
-        selt.time = time*Bullet.lifetime
+        self.time = time*Bullet.lifetime
+        self.visible = True
         
     def step(self):
         if self.time > 0:
             self.time -= 1
             super().step()
+        elif self.visible:
+            self.visible = False
         
 
 class Ship1(Ship):
