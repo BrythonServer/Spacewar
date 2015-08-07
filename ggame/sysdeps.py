@@ -27,8 +27,8 @@ if module_exists('browser') and module_exists('javascript'):
     def __init__(self, width, height, onclose):
       self._w = window.open("", "")
       self._stage = JSConstructor(GFX.Container)()
-      w = width if width != 0 else self._w.innerWidth
-      h = height if height != 0 else self._w.innerHeight
+      w = width if width != 0 else window.innerWidth
+      h = height if height != 0 else window.innerHeight
       self._renderer = GFX.autoDetectRenderer(w, h, {'transparent':True})
       self._w.document.body.appendChild(self._renderer.view)
       self._w.onunload = onclose
