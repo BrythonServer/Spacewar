@@ -98,7 +98,7 @@ class Bullet(GravitySprite):
             if len(ships):
                 if not self.firing:
                     ships[0].explode()
-                self.visible = False
+                    self.visible = False
             elif self.firing:
                 self.firing = False
                 
