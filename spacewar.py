@@ -89,7 +89,7 @@ class Ship(GravitySprite):
         vel = 2
         xv = vel*math.sin(self.rotation)
         yv = vel*(-math.cos(self.rotation))
-        return xv + self.xv, yv + self.yv
+        return xv + self.vx, yv + self.vy
         
 
     def controldown(self, event):
@@ -134,7 +134,6 @@ class Bullet(GravitySprite):
         self.vy = velocity[1]
         self.time = time*30
         self.visible = True
-        print("shoot")
 
     def step(self):
         if self.time > 0:
