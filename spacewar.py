@@ -70,14 +70,14 @@ class GravitySprite(Sprite):
 class Ship(GravitySprite):
 
     R = 2.0
-    bullets = 4
+    bullets = 2
     
     def __init__(self, asset, app, position, velocity, sun):
-        super().__init__(asset, position, velocity, sun)
         self.app = app
         self.bullets = []
         for i in range(Ship.bullets):
             self.bullets.append(Bullet(app, sun))
+        super().__init__(asset, position, velocity, sun)
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
