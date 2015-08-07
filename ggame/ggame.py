@@ -512,7 +512,6 @@ class Sprite(object):
     def destroy(self):
         App._remove(self)
         self.GFX.destroy()
-        self.asset.destroy()
 
 
 class SoundAsset(object):
