@@ -1,8 +1,6 @@
 from ggame import App, Sprite, ImageAsset, Frame
 import math
-import window
-
-print(window.innerheight)
+from browser import window
 
 class Stars(Sprite):
 
