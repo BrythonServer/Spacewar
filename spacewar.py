@@ -28,7 +28,7 @@ class Vector(object):
         self.y = y
         
     def mag(self):
-        return math.sqrt(self.x**2 + self.y**2)
+        return math.sqrt(self.x*self.x + self.y*self.y)
     
     def unit(self):
         r = self.mag()
@@ -48,18 +48,16 @@ class GravitySprite(Sprite):
         self.sun = sun
         
     def step(self):
-        steps = 2
-        for i in range(steps):
-            R = Vector(self.sun.x-self.x, self.sun.y-self.y)
-            Ur = R.unit()
-            ag = GravitySprite.G*self.sun.mass/R.mag()**2
-            Ag = Vector(Ur.x*ag, Ur.y*ag)
-            vx = self.vx
-            vy = self.vy
-            self.vx += Ag.x/steps
-            self.vy += Ag.y/steps
-            self.x += (vx + self.vx)/2/steps
-            self.y += (vy + self.vy)/2/steps
+        R = Vector(self.sun.x-self.x, self.sun.y-self.y)
+        Ur = R.unit()
+        ag = GravitySprite.G*self.sun.mass/R.mag()**2
+        Ag = Vector(Ur.x*ag, Ur.y*ag)
+        vx = self.vx
+        vy = self.vy
+        self.vx += Ag.x
+        self.vy += Ag.y
+        self.x += self.vx + 0.5*Ag.x
+        self.y += self.vy + 0.5*Ag.y
 
 class Ship1(GravitySprite):
     
