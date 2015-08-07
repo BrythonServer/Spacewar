@@ -131,10 +131,9 @@ class Bullet(GravitySprite):
         self.position = position
         self.vx = velocity[0]
         self.vy = velocity[1]
-        self.time = time*Bullet.lifetime
+        self.time = time*30
         self.visible = True
-        print("shooting")
-        
+
     def step(self):
         if self.time > 0:
             self.time -= 1
