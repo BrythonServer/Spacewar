@@ -103,6 +103,7 @@ class Ship(GravitySprite):
         elif command == "fire":
             for bullet in self.bullets:
                 if bullet.time == 0:
+                    print("shoot")
                     bullet.shoot(self.position, self.shootvector(), 15)
                     break
                         
