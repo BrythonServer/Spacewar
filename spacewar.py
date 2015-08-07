@@ -34,8 +34,7 @@ class Spacewar(App):
         sw = self.star1.width
         sh = self.star1.height
         #star1.destroy()
-        print(sw, sh)
-        print(self.
+        print(self.sw, self.sh)
 
 app = Spacewar(800,600)
 app.run()
