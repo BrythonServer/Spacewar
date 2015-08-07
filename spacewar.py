@@ -52,10 +52,12 @@ class GravitySprite(Sprite):
         Ur = R.unit()
         ag = GravitySprite.G*self.sun.mass/R.mag()**2
         Ag = Vector(Ur.x*ag, Ur.y*ag)
-        self.x += self.vx
-        self.y += self.vy
+        vx += self.vx
+        vy += self.vy
         self.vx += Ag.x
         self.vy += Ag.y
+        self.x += (vx + self.vx)/2
+        self.y += (vy + self.vy)/2
 
 class Ship1(GravitySprite):
     
@@ -76,7 +78,7 @@ class Spacewar(App):
             for y in range(height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((width/2 - Sun.width/2, height/2 - Sun.height/2))
-        self.ship1 = Ship1((500,300), (0,-1), self.sun)
+        self.ship1 = Ship1((500,300), (0,-2.5), self.sun)
         
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
