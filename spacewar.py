@@ -81,6 +81,7 @@ class Spacewar(App):
         
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
+        print("Here I am...")
         self.ship1.step()
 
 
