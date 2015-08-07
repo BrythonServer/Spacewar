@@ -20,6 +20,8 @@ class Sun(Sprite):
     def __init__(self, position):
         super().__init__(Sun.asset, position)
         self.mass = 30*1000
+        self.fxcenter = 0.5
+        self.fycenter = 0.5
 
 class Vector(object):
     
@@ -46,8 +48,8 @@ class GravitySprite(Sprite):
         self.vx = velocity[0]
         self.vy = velocity[1]
         self.sun = sun
-        self.fxcenter = 0.5
-        self.fycenter = 0.5
+        #self.fxcenter = 0.5
+        #self.fycenter = 0.5
         
     def step(self):
         dt = 0.033
@@ -91,7 +93,7 @@ class Spacewar(App):
         for x in range(width//Stars.width + 1):
             for y in range(height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
-        self.sun = Sun((width/2 - Sun.width/2, height/2 - Sun.height/2))
+        self.sun = Sun((width/2, height/2))
         self.ship1 = Ship1((500,300), (0,-2.5), self.sun)
         self.ship2 = Ship2((300,300), (0,2.5), self.sun)
         
