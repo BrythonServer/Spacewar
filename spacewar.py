@@ -66,9 +66,6 @@ class GravitySprite(Sprite):
 
 class Ship1(GravitySprite):
     
-    # ship is at 227,0 pixels
-    width = 292-227
-    height = 92
     asset = ImageAsset("four_spaceship_by_albertov.png", 
         Frame(227,0,292-227,92), 1)
         
@@ -77,9 +74,6 @@ class Ship1(GravitySprite):
     
 class Ship2(GravitySprite):
     
-    # ship is at 0,0 pixels
-    width = 86
-    height = 92
     asset = ImageAsset("four_spaceship_by_albertov.png", 
         Frame(0,0,86,92), 1)
         
