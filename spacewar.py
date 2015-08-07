@@ -28,7 +28,7 @@ class Vector(object):
         self.y = y
         
     def mag(self):
-        return math.sqrt(x**2 + y**2)
+        return math.sqrt(self.x**2 + self.y**2)
     
     def unit(self):
         r = self.mag()
@@ -50,7 +50,7 @@ class GravitySprite(Sprite):
     def step(self):
         R = Vector(self.sun.x-self.x, self.sun.y-self.y)
         Ur = R.unit()
-        ag = Gravity.G*sun.mass/R.mag()**2
+        ag = GravitySprite.G*self.sun.mass/R.mag()**2
         Ag = Vector(Ur.x*ag, Ur.y*ag)
         self.x += self.vx
         self.y += self.vy
@@ -76,7 +76,7 @@ class Spacewar(App):
             for y in range(height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((width/2 - Sun.width/2, height/2 - Sun.height/2))
-        self.ship1 = Ship1((500,300), (0,-5), self.sun)
+        self.ship1 = Ship1((500,300), (0,-1), self.sun)
         
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
