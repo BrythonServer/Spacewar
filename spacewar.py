@@ -150,7 +150,7 @@ class Ship(GravitySprite):
         self.rotation += self.rrate
         for bullet in self.bullets:
             bullet.step()
-        bullets = self.collidingWithSprites(Bullet)
+        #bullets = self.collidingWithSprites(Bullet)
         #for bullet in bullets:
         #    if bullet.visible:
         #        if self.collidingWith(bullet):
