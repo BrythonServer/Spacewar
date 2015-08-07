@@ -88,8 +88,8 @@ class Spacewar(App):
             for y in range(height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((width/2, height/2))
-        self.ship1 = Ship1((500,300), (0,-3), self.sun)
-        self.ship2 = Ship2((300,300), (0,3), self.sun)
+        self.ship1 = Ship1((500,300), (0,-4), self.sun)
+        self.ship2 = Ship2((300,300), (0,4), self.sun)
         
     def step(self):
         #for ship in self.getSpritesbyClass(Ship1
