@@ -21,6 +21,7 @@ class Spacewar(App):
                 #Stars((x*sw, y*sh))
                 pass
         #star1.destroy()
+        star2 = Stars((512,0))
         
 app = Spacewar(800,600)
 app.run()
