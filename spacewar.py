@@ -227,8 +227,8 @@ class Spacewar(App):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((self.width/2, self.height/2))
-        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-80), self.sun)
-        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,80), self.sun)
+        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-160), self.sun)
+        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,160), self.sun)
         self.Tlast = time()
         
     def step(self):
