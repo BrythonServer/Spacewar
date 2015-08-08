@@ -42,7 +42,7 @@ class Vector(object):
 
 class GravitySprite(Sprite):
     
-    G = 10.0
+    G = 50.0
     T = 3.0
 
     def __init__(self, asset, position, velocity, sun):
