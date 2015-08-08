@@ -43,7 +43,6 @@ class Vector(object):
 class GravitySprite(Sprite):
     
     G = 50.0
-    T = 3.0
 
     def __init__(self, asset, position, velocity, sun):
         super().__init__(asset, position)
@@ -54,6 +53,7 @@ class GravitySprite(Sprite):
         self.fycenter = 0.5
         self.rrate = 0.0
         self.thrust = 0.0
+        self.mass = 1.0
         
     def step(self, T, dT):
         #dt = 0.033
@@ -64,7 +64,7 @@ class GravitySprite(Sprite):
         ag = GravitySprite.G*self.sun.mass/R.mag()**2
         Agx, Agy = Ux*ag, Uy*ag
         vx, vy = self.vx, self.vy
-        Tt = self.thrust*GravitySprite.T
+        At = self.thrust/self.mass
         dt2o2 = dT*dT*0.5
         self.vx += (Agx + Tt*math.sin(self.rotation))* dT
         self.vy += (Agy - Tt*math.cos(self.rotation))* dT
@@ -129,6 +129,7 @@ class Ship(GravitySprite):
         self.initvelocity = self.vx, self.vy
         self.initrotation = self.rotation
         self.app = app
+        self.mass = 1.0
         self.circularCollisionModel()
 
     def registerKeys(self, keys):
@@ -151,7 +152,7 @@ class Ship(GravitySprite):
         elif command == "right":
             self.rrate = Ship.R*0.01
         elif command == "forward":
-            self.thrust = 0.1
+            self.thrust = 1.0
         elif command == "fire":
             for bullet in self.bullets:
                 if bullet.time == 0:
