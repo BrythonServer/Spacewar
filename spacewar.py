@@ -110,9 +110,10 @@ class Bullet(GravitySprite):
                     self.firing = False
             
                 
-        elif self.visible:
+        else:
+            if self.visible:
+                self.visible = False
             self.time = 0
-            self.visible = False
         
         
 
