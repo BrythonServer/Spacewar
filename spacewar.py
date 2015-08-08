@@ -59,16 +59,16 @@ class GravitySprite(Sprite):
         R = Vector(self.sun.x-self.x, self.sun.y-self.y)
         #Ur = R.unit()
         r = R.mag()
-        Ux = R.x/r
-        Uy = R.y/r
+        Ux, Uy = R.x/r, R.y/r
         ag = GravitySprite.G*self.sun.mass/R.mag()**2
-        Ag = Vector(Ux*ag, Uy*ag)
-        vx = self.vx
-        vy = self.vy
-        self.vx += (Ag.x + self.thrust*GravitySprite.T*math.sin(self.rotation))* dt
-        self.vy += (Ag.y - self.thrust*GravitySprite.T*math.cos(self.rotation))* dt
-        self.x += self.vx + 0.5*Ag.x*dt*dt
-        self.y += self.vy + 0.5*Ag.y*dt*dt
+        Agx, Agy = Ux*ag, Uy*ag
+        vx, vy = self.vx, self.vy
+        Tt = self.thrust*GravitySprite.T
+        dt2o2 = dt*dt*0.5
+        self.vx += (Agx + Tt*math.sin(self.rotation))* dt
+        self.vy += (Agy - Tt*math.cos(self.rotation))* dt
+        self.x += self.vx + Agx*dt202
+        self.y += self.vy + Agy*dt202
 
 
 class Bullet(GravitySprite):
