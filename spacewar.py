@@ -119,7 +119,7 @@ class Bullet(GravitySprite):
 
 class Ship(GravitySprite):
 
-    R = 2.0
+    R = 1.0
     bullets = 2
     
     def __init__(self, asset, app, position, velocity, sun):
@@ -150,9 +150,9 @@ class Ship(GravitySprite):
     def controldown(self, event):
         command = self.keymap[event.key]
         if command == "left":
-            self.rrate = -0.01*Ship.R
+            self.rrate = -Ship.R
         elif command == "right":
-            self.rrate = Ship.R*0.01
+            self.rrate = Ship.R
         elif command == "forward":
             self.thrust = 40.0
         elif command == "fire":
@@ -171,7 +171,7 @@ class Ship(GravitySprite):
             
     def step(self, T, dT):
         super().step(T, dT)
-        self.rotation += self.rrate
+        self.rotation += self.rrate * dT
         for bullet in self.bullets:
             bullet.step(T, dT)
         if self.collidingWith(self.sun):
