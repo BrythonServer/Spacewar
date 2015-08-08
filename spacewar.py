@@ -119,7 +119,7 @@ class Bullet(GravitySprite):
 
 class Ship(GravitySprite):
 
-    R = 3.0
+    R = 2.0
     bullets = 2
     
     def __init__(self, asset, app, position, velocity, sun):
@@ -158,7 +158,7 @@ class Ship(GravitySprite):
         elif command == "fire":
             for bullet in self.bullets:
                 if bullet.time == 0:
-                    bullet.shoot(self.position, self.shootvector(), 15)
+                    bullet.shoot(self.position, self.shootvector(), 30)
                     break
                         
             
