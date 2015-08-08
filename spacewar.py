@@ -42,7 +42,7 @@ class Vector(object):
 
 class GravitySprite(Sprite):
     
-    G = 1.0
+    G = 10.0
     T = 3.0
 
     def __init__(self, asset, position, velocity, sun):
@@ -138,7 +138,7 @@ class Ship(GravitySprite):
         [self.app.listenKeyEvent("keyup", k, self.controlup) for k in keys]
 
     def shootvector(self):
-        vel = 40
+        vel = 100
         xv = vel*math.sin(self.rotation)
         yv = vel*(-math.cos(self.rotation))
         return xv + self.vx, yv + self.vy
@@ -227,8 +227,8 @@ class Spacewar(App):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((self.width/2, self.height/2))
-        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-30), self.sun)
-        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,30), self.sun)
+        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-80), self.sun)
+        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,80), self.sun)
         self.Tlast = time()
         
     def step(self):
