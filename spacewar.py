@@ -119,7 +119,7 @@ class Bullet(GravitySprite):
 
 class Ship(GravitySprite):
 
-    R = 1.0
+    R = 3.0
     bullets = 2
     
     def __init__(self, asset, app, position, velocity, sun):
