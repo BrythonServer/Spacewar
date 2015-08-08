@@ -141,7 +141,7 @@ class Ship(GravitySprite):
         [self.app.listenKeyEvent("keyup", k, self.controlup) for k in keys]
 
     def shootvector(self):
-        vel = 100
+        vel = 150
         xv = vel*math.sin(self.rotation)
         yv = vel*(-math.cos(self.rotation))
         return xv + self.vx, yv + self.vy
@@ -158,7 +158,7 @@ class Ship(GravitySprite):
         elif command == "fire":
             for bullet in self.bullets:
                 if bullet.time == 0:
-                    bullet.shoot(self.position, self.shootvector(), 30)
+                    bullet.shoot(self.position, self.shootvector(), 10)
                     break
                         
             
