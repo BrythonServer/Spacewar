@@ -153,7 +153,7 @@ class Ship(GravitySprite):
         elif command == "right":
             self.rrate = Ship.R*0.01
         elif command == "forward":
-            self.thrust = 10.0
+            self.thrust = 40.0
         elif command == "fire":
             for bullet in self.bullets:
                 if bullet.time == 0:
