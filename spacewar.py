@@ -1,5 +1,6 @@
 from ggame import App, Sprite, ImageAsset, Frame
 import math
+from time import time
 
 class Stars(Sprite):
 
@@ -43,7 +44,7 @@ class GravitySprite(Sprite):
     
     G = 1.0
     T = 3.0
-    
+
     def __init__(self, asset, position, velocity, sun):
         super().__init__(asset, position)
         self.vx = velocity[0]
@@ -54,7 +55,7 @@ class GravitySprite(Sprite):
         self.rrate = 0.0
         self.thrust = 0.0
         
-    def step(self):
+    def step(self, T, dT):
         dt = 0.033
         R = Vector(self.sun.x-self.x, self.sun.y-self.y)
         #Ur = R.unit()
@@ -90,12 +91,12 @@ class Bullet(GravitySprite):
         self.visible = True
         self.firing = True
 
-    def step(self):
+    def step(self, T, dT):
         if self.time > 0:
             self.time -= 1
             if self.visible:
                 self.nextImage(True)
-                super().step()
+                super().step(T, dT)
                 if self.collidingWith(self.sun):
                     self.visible = False
                 ships = []
@@ -165,8 +166,8 @@ class Ship(GravitySprite):
         elif command == "forward":
             self.thrust = 0.0
             
-    def step(self):
-        super().step()
+    def step(self, T, dT):
+        super().step(T, dT)
         self.rotation += self.rrate
         for bullet in self.bullets:
             bullet.step()
@@ -194,8 +195,8 @@ class Ship1(Ship):
         super().__init__(Ship1.asset, app, position, velocity, sun)
         self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
         
-    def step(self):
-        super().step()
+    def step(self, T, dT):
+        super().step(T, dT)
         collides = self.collidingWithSprites(Ship2)
         if len(collides):
             collides[0].explode()
@@ -210,8 +211,8 @@ class Ship2(Ship):
         super().__init__(Ship2.asset, app, position, velocity, sun)
         self.registerKeys(["a", "d", "w", "space"])
 
-    def step(self):
-        super().step()
+    def step(self, T, dT):
+        super().step(T, dT)
         collides = self.collidingWithSprites(Ship1)
         if len(collides):
             collides[0].explode()
@@ -228,10 +229,14 @@ class Spacewar(App):
         self.sun = Sun((self.width/2, self.height/2))
         self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-4), self.sun)
         self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,4), self.sun)
+        self.Tlast = time()
         
     def step(self):
-        self.ship1.step()
-        self.ship2.step()
+        T = time()
+        dT = T-self.Tlast
+        self.Tlast = T
+        self.ship1.step(T, dT)
+        self.ship2.step(T, dT)
 
 
 app = Spacewar(0,0)
