@@ -68,8 +68,8 @@ class GravitySprite(Sprite):
         dt2o2 = dT*dT*0.5
         self.vx += (Agx + Tt*math.sin(self.rotation))* dT
         self.vy += (Agy - Tt*math.cos(self.rotation))* dT
-        self.x += self.vx + Agx*dt2o2
-        self.y += self.vy + Agy*dt2o2
+        self.x += self.vx * dT + Agx*dt2o2
+        self.y += self.vy * dT + Agy*dt2o2
 
 
 class Bullet(GravitySprite):
