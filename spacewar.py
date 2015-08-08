@@ -170,7 +170,7 @@ class Ship(GravitySprite):
         super().step(T, dT)
         self.rotation += self.rrate
         for bullet in self.bullets:
-            bullet.step()
+            bullet.step(T, dT)
         if self.collidingWith(self.sun):
             self.explode()
         if (self.x < -100 or self.x > self.app.width + 100 or
