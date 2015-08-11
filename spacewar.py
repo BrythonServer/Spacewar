@@ -126,6 +126,7 @@ class Ship(GravitySprite):
 
     R = 2.0
     bullets = 2
+    reappearasset = SoundAsset("sounds/reappear.mp3")
     
     def __init__(self, asset, app, position, velocity, sun):
         self.bullets = []
@@ -139,6 +140,7 @@ class Ship(GravitySprite):
         self.mass = 1.0
         self.circularCollisionModel()
         self.imagex = 0
+        self.reappear = Sound(Ship.reappearasset)
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
@@ -184,7 +186,7 @@ class Ship(GravitySprite):
         if self.waitspawn > 0:
             self.waitspawn -= dT
             if self.waitspawn < 0:
-                
+                self.reset()
         self.rotation += self.rrate * dT
         for bullet in self.bullets:
             bullet.step(T, dT)
@@ -209,6 +211,9 @@ class Ship(GravitySprite):
         self.position = self.initposition
         self.vx, self.vy = self.initvelocity
         self.rotation = self.initrotation
+        self.reappear.play()
+        self.visible
+
 
             
 class Ship1(Ship):
@@ -287,8 +292,8 @@ class Spacewar(App):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((self.width/2, self.height/2))
-        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-140), self.sun)
-        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,140), self.sun)
+        self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-140), self.sun)
+        self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,140), self.sun)
         self.Tlast = time()
         
     def step(self):
