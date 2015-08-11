@@ -123,7 +123,7 @@ class Bullet(GravitySprite):
 
 class HealthBar(object):
     
-    dev __init__(self, indicatorasset, initvalue, position, app):
+    def __init__(self, indicatorasset, initvalue, position, app):
         pass
         
 
