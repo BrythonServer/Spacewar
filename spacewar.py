@@ -206,10 +206,10 @@ class Ship(GravitySprite):
 
     def explode(self):
         self.visible = False
+        ExplosionBig(self.position)
         self.position = self.initposition
         self.vx, self.vy = self.initvelocity
         self.rotation = self.initrotation
-        ExplosionBig(self.position)
         self.waitspawn = 5
 
     def reset(self):
