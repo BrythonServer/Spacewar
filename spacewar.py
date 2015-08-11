@@ -141,6 +141,7 @@ class Ship(GravitySprite):
         self.circularCollisionModel()
         self.imagex = 0
         self.reappear = Sound(Ship.reappearasset)
+        self.reappear.volume = 40
         self.waitspawn = 0
         self.respawnplayed = False
 
