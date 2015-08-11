@@ -183,12 +183,12 @@ class Ship(GravitySprite):
             self.setImage(self.imagex)
             
     def step(self, T, dT):
-        super().step(T, dT)
         if self.waitspawn > 0:
             self.waitspawn -= dT
             if self.waitspawn < 0:
                 self.reset()
         if self.visible:
+            super().step(T, dT)
             self.rotation += self.rrate * dT
             for bullet in self.bullets:
                 bullet.step(T, dT)
@@ -206,13 +206,13 @@ class Ship(GravitySprite):
 
     def explode(self):
         self.visible = False
+        self.position = self.initposition
+        self.vx, self.vy = self.initvelocity
+        self.rotation = self.initrotation
         ExplosionBig(self.position)
         self.waitspawn = 5
 
     def reset(self):
-        self.position = self.initposition
-        self.vx, self.vy = self.initvelocity
-        self.rotation = self.initrotation
         self.reappear.play()
         self.visible = True
 
