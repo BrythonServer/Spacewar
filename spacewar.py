@@ -1,5 +1,6 @@
 from ggame import App, Sprite, ImageAsset, Frame
 import math
+from time import time
 
 class Stars(Sprite):
 
@@ -41,9 +42,8 @@ class Vector(object):
 
 class GravitySprite(Sprite):
     
-    G = 1.0
-    T = 3.0
-    
+    G = 50.0
+
     def __init__(self, asset, position, velocity, sun):
         super().__init__(asset, position)
         self.vx = velocity[0]
@@ -53,19 +53,23 @@ class GravitySprite(Sprite):
         self.fycenter = 0.5
         self.rrate = 0.0
         self.thrust = 0.0
+        self.mass = 1.0
         
-    def step(self):
-        dt = 0.033
+    def step(self, T, dT):
+        #dt = 0.033
         R = Vector(self.sun.x-self.x, self.sun.y-self.y)
-        Ur = R.unit()
+        #Ur = R.unit()
+        r = R.mag()
+        Ux, Uy = R.x/r, R.y/r
         ag = GravitySprite.G*self.sun.mass/R.mag()**2
-        Ag = Vector(Ur.x*ag, Ur.y*ag)
-        vx = self.vx
-        vy = self.vy
-        self.vx += (Ag.x + self.thrust*GravitySprite.T*math.sin(self.rotation))* dt
-        self.vy += (Ag.y - self.thrust*GravitySprite.T*math.cos(self.rotation))* dt
-        self.x += self.vx + 0.5*Ag.x*dt*dt
-        self.y += self.vy + 0.5*Ag.y*dt*dt
+        Agx, Agy = Ux*ag, Uy*ag
+        vx, vy = self.vx, self.vy
+        At = self.thrust/self.mass
+        dt2o2 = dT*dT*0.5
+        self.vx += (Agx + At*math.sin(self.rotation))* dT
+        self.vy += (Agy - At*math.cos(self.rotation))* dT
+        self.x += self.vx * dT + Agx*dt2o2
+        self.y += self.vy * dT + Agy*dt2o2
 
 
 class Bullet(GravitySprite):
@@ -83,16 +87,16 @@ class Bullet(GravitySprite):
         self.position = position
         self.vx = velocity[0]
         self.vy = velocity[1]
-        self.time = time*30
+        self.time = time
         self.visible = True
         self.firing = True
 
-    def step(self):
+    def step(self, T, dT):
         if self.time > 0:
-            self.time -= 1
+            self.time -= dT
             if self.visible:
                 self.nextImage(True)
-                super().step()
+                super().step(T, dT)
                 if self.collidingWith(self.sun):
                     self.visible = False
                 ships = []
@@ -106,8 +110,10 @@ class Bullet(GravitySprite):
                     self.firing = False
             
                 
-        elif self.visible:
-            self.visible = False
+        else:
+            if self.visible:
+                self.visible = False
+            self.time = 0
         
         
 
@@ -125,6 +131,7 @@ class Ship(GravitySprite):
         self.initvelocity = self.vx, self.vy
         self.initrotation = self.rotation
         self.app = app
+        self.mass = 1.0
         self.circularCollisionModel()
 
     def registerKeys(self, keys):
@@ -134,7 +141,7 @@ class Ship(GravitySprite):
         [self.app.listenKeyEvent("keyup", k, self.controlup) for k in keys]
 
     def shootvector(self):
-        vel = 2
+        vel = 150
         xv = vel*math.sin(self.rotation)
         yv = vel*(-math.cos(self.rotation))
         return xv + self.vx, yv + self.vy
@@ -143,15 +150,15 @@ class Ship(GravitySprite):
     def controldown(self, event):
         command = self.keymap[event.key]
         if command == "left":
-            self.rrate = -0.01*Ship.R
+            self.rrate = -Ship.R
         elif command == "right":
-            self.rrate = Ship.R*0.01
+            self.rrate = Ship.R
         elif command == "forward":
-            self.thrust = 0.1
+            self.thrust = 40.0
         elif command == "fire":
             for bullet in self.bullets:
                 if bullet.time == 0:
-                    bullet.shoot(self.position, self.shootvector(), 15)
+                    bullet.shoot(self.position, self.shootvector(), 10)
                     break
                         
             
@@ -162,11 +169,11 @@ class Ship(GravitySprite):
         elif command == "forward":
             self.thrust = 0.0
             
-    def step(self):
-        super().step()
-        self.rotation += self.rrate
+    def step(self, T, dT):
+        super().step(T, dT)
+        self.rotation += self.rrate * dT
         for bullet in self.bullets:
-            bullet.step()
+            bullet.step(T, dT)
         if self.collidingWith(self.sun):
             self.explode()
         if (self.x < -100 or self.x > self.app.width + 100 or
@@ -191,8 +198,8 @@ class Ship1(Ship):
         super().__init__(Ship1.asset, app, position, velocity, sun)
         self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
         
-    def step(self):
-        super().step()
+    def step(self, T, dT):
+        super().step(T, dT)
         collides = self.collidingWithSprites(Ship2)
         if len(collides):
             collides[0].explode()
@@ -207,8 +214,8 @@ class Ship2(Ship):
         super().__init__(Ship2.asset, app, position, velocity, sun)
         self.registerKeys(["a", "d", "w", "space"])
 
-    def step(self):
-        super().step()
+    def step(self, T, dT):
+        super().step(T, dT)
         collides = self.collidingWithSprites(Ship1)
         if len(collides):
             collides[0].explode()
@@ -223,12 +230,16 @@ class Spacewar(App):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((self.width/2, self.height/2))
-        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-4), self.sun)
-        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,4), self.sun)
+        self.ship1 = Ship1(self, (self.width/2+100,self.height/2), (0,-140), self.sun)
+        self.ship2 = Ship2(self, (self.width/2-100,self.height/2), (0,140), self.sun)
+        self.Tlast = time()
         
     def step(self):
-        self.ship1.step()
-        self.ship2.step()
+        T = time()
+        dT = T-self.Tlast
+        self.Tlast = T
+        self.ship1.step(T, dT)
+        self.ship2.step(T, dT)
 
 
 app = Spacewar(0,0)
