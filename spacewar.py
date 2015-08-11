@@ -253,7 +253,7 @@ class ExplosionSmall(Sprite):
     def step(self):
         self.setImage(self.image//2)  # slow it down
         self.image += 1
-        if self.image == 10:
+        if self.image == 20:
             self.destroy()
 
 class ExplosionBig(Sprite):
@@ -271,7 +271,7 @@ class ExplosionBig(Sprite):
     def step(self):
         self.setImage(self.image//2)  # slow it down
         self.image += 1
-        if self.image == 10:
+        if self.image == 50:
             self.destroy()
 
 class Spacewar(App):
