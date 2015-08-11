@@ -188,19 +188,20 @@ class Ship(GravitySprite):
             self.waitspawn -= dT
             if self.waitspawn < 0:
                 self.reset()
-        self.rotation += self.rrate * dT
-        for bullet in self.bullets:
-            bullet.step(T, dT)
-        if self.collidingWith(self.sun):
-            self.explode()
-        if self.thrust != 0.0:
-            self.imagex += 1    # animate the rockets
-            if self.imagex == 4:
-                self.imagex = 1
-            self.setImage(self.imagex)
-        if (self.x < -100 or self.x > self.app.width + 100 or
-            self.y < -100 or self.y > self.app.height + 100):
-            self.explode()
+        if self.visible:
+            self.rotation += self.rrate * dT
+            for bullet in self.bullets:
+                bullet.step(T, dT)
+            if self.collidingWith(self.sun):
+                self.explode()
+            if self.thrust != 0.0:
+                self.imagex += 1    # animate the rockets
+                if self.imagex == 4:
+                    self.imagex = 1
+                self.setImage(self.imagex)
+            if (self.x < -100 or self.x > self.app.width + 100 or
+                self.y < -100 or self.y > self.app.height + 100):
+                self.explode()
         
 
     def explode(self):
@@ -293,8 +294,8 @@ class Spacewar(App):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((self.width/2, self.height/2))
-        self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-140), self.sun)
-        self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,140), self.sun)
+        self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-120), self.sun)
+        self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,120), self.sun)
         self.Tlast = time()
         
     def step(self):
