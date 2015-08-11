@@ -190,7 +190,7 @@ class Ship(GravitySprite):
             if self.waitspawn < 1 and not self.respawnplayed:
                 self.reappear.play()
                 self.respawnplayed = True
-            if self.waitspawn < 0:
+            if self.waitspawn <= 0:
                 self.reset()
         if self.visible:
             super().step(T, dT)
