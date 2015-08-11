@@ -262,10 +262,10 @@ class ExplosionBig(Sprite):
     boomasset = SoundAsset("sounds/explosion2.mp3")
     
     def __init__(self, position):
-        super().__init__(ExplosionSmall.asset, position)
+        super().__init__(ExplosionBig.asset, position)
         self.image = 0
         self.center = (0.5, 0.5)
-        self.boom = Sound(ExplosionSmall.boomasset)
+        self.boom = Sound(ExplosionBig.boomasset)
         self.boom.play()
         
     def step(self):
