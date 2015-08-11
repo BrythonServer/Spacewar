@@ -214,7 +214,7 @@ class Ship(GravitySprite):
         self.vx, self.vy = self.initvelocity
         self.rotation = self.initrotation
         self.reappear.play()
-        self.visible
+        self.visible = True
 
 
             
