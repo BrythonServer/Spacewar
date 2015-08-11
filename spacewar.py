@@ -121,13 +121,16 @@ class Bullet(GravitySprite):
             self.time = 0
 
 
-        
+class HealthBar(object):
+    
+    dev __init__(self, indicatorasset, initvalue, position, app):
+        pass
         
 
 class Ship(GravitySprite):
 
     R = 2.0
-    bullets = 2
+    bullets = 6
     reappearasset = SoundAsset("sounds/reappear.mp3")
     
     def __init__(self, asset, app, position, velocity, sun):
