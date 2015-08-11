@@ -202,7 +202,7 @@ class Ship(GravitySprite):
             
 class Ship1(Ship):
     
-    asset = ImageAsset("images/four_spaceship_by_albertov.png", 
+    asset = ImageAsset("images/four_spaceship_by_albertov_with_thrust.png", 
         Frame(227,0,292-227,125), 4, 'vertical')
         
     def __init__(self, app, position, velocity, sun):
@@ -218,7 +218,7 @@ class Ship1(Ship):
         
 class Ship2(Ship):
     
-    asset = ImageAsset("images/four_spaceship_by_albertov.png", 
+    asset = ImageAsset("images/four_spaceship_by_albertov_with_thrust.png", 
         Frame(0,0,86,125), 4, 'vertical')
         
     def __init__(self, app, position, velocity, sun):
