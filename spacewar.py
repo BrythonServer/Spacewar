@@ -187,7 +187,7 @@ class Ship(GravitySprite):
     def step(self, T, dT):
         if self.waitspawn > 0:
             self.waitspawn -= dT
-            if self.waitspawn < 2 and not self.respawnplayed:
+            if self.waitspawn < 1 and not self.respawnplayed:
                 self.reappear.play()
                 self.respawnplayed = True
             if self.waitspawn < 0:
