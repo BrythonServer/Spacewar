@@ -185,6 +185,8 @@ class Ship(GravitySprite):
     def step(self, T, dT):
         if self.waitspawn > 0:
             self.waitspawn -= dT
+            if self.waitspawn < 2:
+                self.reappear.play()
             if self.waitspawn < 0:
                 self.reset()
         if self.visible:
@@ -213,7 +215,6 @@ class Ship(GravitySprite):
         self.waitspawn = 5
 
     def reset(self):
-        self.reappear.play()
         self.visible = True
 
 
