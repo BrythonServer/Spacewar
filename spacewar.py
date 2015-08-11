@@ -4,7 +4,7 @@ from time import time
 
 class Stars(Sprite):
 
-    asset = ImageAsset("starfield.jpg")
+    asset = ImageAsset("images/starfield.jpg")
     width = 512
     height = 512
 
@@ -13,7 +13,7 @@ class Stars(Sprite):
 
 class Sun(Sprite):
     
-    asset = ImageAsset("sun.png")
+    asset = ImageAsset("images/sun.png")
     width = 80
     height = 76
     
@@ -74,7 +74,7 @@ class GravitySprite(Sprite):
 
 class Bullet(GravitySprite):
     
-    asset = ImageAsset("blast.png", Frame(0,0,8,8), 8)
+    asset = ImageAsset("images/blast.png", Frame(0,0,8,8), 8)
     
     def __init__(self, app, sun):
         super().__init__(Bullet.asset, (0,0), (0,0), sun)
@@ -191,7 +191,7 @@ class Ship(GravitySprite):
             
 class Ship1(Ship):
     
-    asset = ImageAsset("four_spaceship_by_albertov.png", 
+    asset = ImageAsset("images/four_spaceship_by_albertov.png", 
         Frame(227,0,292-227,92), 1)
         
     def __init__(self, app, position, velocity, sun):
@@ -207,7 +207,7 @@ class Ship1(Ship):
         
 class Ship2(Ship):
     
-    asset = ImageAsset("four_spaceship_by_albertov.png", 
+    asset = ImageAsset("images/four_spaceship_by_albertov.png", 
         Frame(0,0,86,92), 1)
         
     def __init__(self, app, position, velocity, sun):
