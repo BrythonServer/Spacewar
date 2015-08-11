@@ -197,6 +197,7 @@ class Ship(GravitySprite):
         
 
     def explode(self):
+        ExplosionBig(self.position)
         self.reset()
         
     def reset(self):
@@ -250,7 +251,25 @@ class ExplosionSmall(Sprite):
         self.boom.play()
         
     def step(self):
-        self.setImage(self.image)
+        self.setImage(self.image//2)  # slow it down
+        self.image += 1
+        if self.image == 10:
+            self.destroy()
+
+class ExplosionBig(Sprite):
+    
+    asset = ImageAsset("images/explosion2.png", Frame(0,0,4800/25,195), 25)
+    boomasset = SoundAsset("sounds/explosion2.mp3")
+    
+    def __init__(self, position):
+        super().__init__(ExplosionSmall.asset, position)
+        self.image = 0
+        self.center = (0.5, 0.5)
+        self.boom = Sound(ExplosionSmall.boomasset)
+        self.boom.play()
+        
+    def step(self):
+        self.setImage(self.image//2)  # slow it down
         self.image += 1
         if self.image == 10:
             self.destroy()
@@ -276,11 +295,9 @@ class Spacewar(App):
         explosions = self.getSpritesbyClass(ExplosionSmall)
         for explosion in explosions:
             explosion.step()
-        """
         explosions = self.getSpritesbyClass(ExplosionBig)
         for explosion in explosions:
             explosion.step()
-        """
 
 app = Spacewar(0,0)
 app.run()
