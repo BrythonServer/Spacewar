@@ -1,4 +1,4 @@
-from ggame import App, Sprite, ImageAsset, Frame
+from ggame import App, Sprite, ImageAsset, Frame, SoundAsset, Sound
 import math
 from time import time
 
@@ -75,6 +75,7 @@ class GravitySprite(Sprite):
 class Bullet(GravitySprite):
     
     asset = ImageAsset("images/blast.png", Frame(0,0,8,8), 8)
+    pewasset = SoundAsset("sounds/pew1.mp3")
     
     def __init__(self, app, sun):
         super().__init__(Bullet.asset, (0,0), (0,0), sun)
@@ -82,6 +83,8 @@ class Bullet(GravitySprite):
         self.firing = False
         self.time = 0
         self.circularCollisionModel()
+        self.pew = Sound(Bullet.pewasset)
+        self.pew.volume = 10
         
     def shoot(self, position, velocity, time):
         self.position = position
@@ -90,6 +93,7 @@ class Bullet(GravitySprite):
         self.time = time
         self.visible = True
         self.firing = True
+        self.pew.play()
 
     def step(self, T, dT):
         if self.time > 0:
@@ -156,7 +160,7 @@ class Ship(GravitySprite):
             self.rrate = Ship.R
         elif command == "forward":
             self.thrust = 40.0
-            self.imagex = 1
+            self.imagex = 1 # start the animated rockets
             self.setImage(self.imagex)
         elif command == "fire":
             for bullet in self.bullets:
@@ -171,7 +175,7 @@ class Ship(GravitySprite):
             self.rrate = 0.0
         elif command == "forward":
             self.thrust = 0.0
-            self.imagex = 0
+            self.imagex = 0 # stop the animated rockets
             self.setImage(self.imagex)
             
     def step(self, T, dT):
@@ -182,7 +186,7 @@ class Ship(GravitySprite):
         if self.collidingWith(self.sun):
             self.explode()
         if self.thrust != 0.0:
-            self.imagex += 1
+            self.imagex += 1    # animate the rockets
             if self.imagex == 4:
                 self.imagex = 1
             self.setImage(self.imagex)
