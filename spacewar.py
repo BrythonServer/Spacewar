@@ -4,7 +4,7 @@ from time import time
 
 class Stars(Sprite):
 
-    asset = ImageAsset("starfield.jpg")
+    asset = ImageAsset("images/starfield.jpg")
     width = 512
     height = 512
 
@@ -13,7 +13,7 @@ class Stars(Sprite):
 
 class Sun(Sprite):
     
-    asset = ImageAsset("sun.png")
+    asset = ImageAsset("images/sun.png")
     width = 80
     height = 76
     
@@ -74,7 +74,7 @@ class GravitySprite(Sprite):
 
 class Bullet(GravitySprite):
     
-    asset = ImageAsset("blast.png", Frame(0,0,8,8), 8)
+    asset = ImageAsset("images/blast.png", Frame(0,0,8,8), 8)
     
     def __init__(self, app, sun):
         super().__init__(Bullet.asset, (0,0), (0,0), sun)
@@ -133,6 +133,7 @@ class Ship(GravitySprite):
         self.app = app
         self.mass = 1.0
         self.circularCollisionModel()
+        self.imagex = 0
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
@@ -155,6 +156,8 @@ class Ship(GravitySprite):
             self.rrate = Ship.R
         elif command == "forward":
             self.thrust = 40.0
+            self.imagex = 1
+            self.setImage(self.imagex)
         elif command == "fire":
             for bullet in self.bullets:
                 if bullet.time == 0:
@@ -168,6 +171,8 @@ class Ship(GravitySprite):
             self.rrate = 0.0
         elif command == "forward":
             self.thrust = 0.0
+            self.imagex = 0
+            self.setImage(self.imagex)
             
     def step(self, T, dT):
         super().step(T, dT)
@@ -176,9 +181,15 @@ class Ship(GravitySprite):
             bullet.step(T, dT)
         if self.collidingWith(self.sun):
             self.explode()
+        if self.thrust != 0.0:
+            self.imagex += 1
+            if self.imagex == 4:
+                self.imagex = 1
+            self.setImage(self.imagex)
         if (self.x < -100 or self.x > self.app.width + 100 or
             self.y < -100 or self.y > self.app.height + 100):
             self.reset()
+        
 
     def explode(self):
         self.reset()
@@ -191,8 +202,8 @@ class Ship(GravitySprite):
             
 class Ship1(Ship):
     
-    asset = ImageAsset("four_spaceship_by_albertov.png", 
-        Frame(227,0,292-227,92), 1)
+    asset = ImageAsset("images/four_spaceship_by_albertov_with_thrust.png", 
+        Frame(227,0,292-227,125), 4, 'vertical')
         
     def __init__(self, app, position, velocity, sun):
         super().__init__(Ship1.asset, app, position, velocity, sun)
@@ -207,8 +218,8 @@ class Ship1(Ship):
         
 class Ship2(Ship):
     
-    asset = ImageAsset("four_spaceship_by_albertov.png", 
-        Frame(0,0,86,92), 1)
+    asset = ImageAsset("images/four_spaceship_by_albertov_with_thrust.png", 
+        Frame(0,0,86,125), 4, 'vertical')
         
     def __init__(self, app, position, velocity, sun):
         super().__init__(Ship2.asset, app, position, velocity, sun)
