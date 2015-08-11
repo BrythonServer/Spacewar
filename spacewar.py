@@ -198,11 +198,11 @@ class Ship(GravitySprite):
                 self.respawnplayed = True
             if self.waitspawn <= 0:
                 self.reset()
+        for bullet in self.bullets:
+            bullet.step(T, dT)
         if self.visible:
             super().step(T, dT)
             self.rotation += self.rrate * dT
-            for bullet in self.bullets:
-                bullet.step(T, dT)
             if self.collidingWith(self.sun):
                 self.explode()
             if self.thrust != 0.0:
