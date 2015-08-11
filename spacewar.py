@@ -238,8 +238,9 @@ class Ship1(Ship):
         if self.visible:
             collides = self.collidingWithSprites(Ship2)
             if len(collides):
-                collides[0].explode()
-                self.explode()
+                if collides[0].visible:
+                    collides[0].explode()
+                    self.explode()
         
 class Ship2(Ship):
     
@@ -255,8 +256,9 @@ class Ship2(Ship):
         if self.visible:
             collides = self.collidingWithSprites(Ship1)
             if len(collides):
-                collides[0].explode()
-                self.explode()
+                if collides[0].visible:
+                    collides[0].explode()
+                    self.explode()
 
 class ExplosionSmall(Sprite):
     
