@@ -141,6 +141,7 @@ class Ship(GravitySprite):
         self.circularCollisionModel()
         self.imagex = 0
         self.reappear = Sound(Ship.reappearasset)
+        self.waitspawn = 0
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
