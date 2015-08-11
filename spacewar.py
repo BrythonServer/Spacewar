@@ -244,6 +244,7 @@ class ExplosionSmall(Sprite):
     def __init__(self, position):
         super().__init__(ExplosionSmall.asset, position)
         self.image = 0
+        self.center = (0.5, 0.5)
         
     def step(self):
         self.setImage(self.image)
