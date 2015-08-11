@@ -1,4 +1,4 @@
-from ggame import App, Sprite, ImageAsset, Frame
+from ggame import App, Sprite, ImageAsset, Frame, SoundAsset, Sound
 import math
 from time import time
 
