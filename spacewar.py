@@ -75,6 +75,7 @@ class GravitySprite(Sprite):
 class Bullet(GravitySprite):
     
     asset = ImageAsset("images/blast.png", Frame(0,0,8,8), 8)
+    pewasset = SoundAsset("sounds/pew1.mp3")
     
     def __init__(self, app, sun):
         super().__init__(Bullet.asset, (0,0), (0,0), sun)
@@ -82,6 +83,7 @@ class Bullet(GravitySprite):
         self.firing = False
         self.time = 0
         self.circularCollisionModel()
+        self.pew = Sound(Bullet.pewasset)
         
     def shoot(self, position, velocity, time):
         self.position = position
@@ -90,6 +92,7 @@ class Bullet(GravitySprite):
         self.time = time
         self.visible = True
         self.firing = True
+        self.pew.play()
 
     def step(self, T, dT):
         if self.time > 0:
