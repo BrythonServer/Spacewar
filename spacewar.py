@@ -103,6 +103,7 @@ class Bullet(GravitySprite):
                 super().step(T, dT)
                 if self.collidingWith(self.sun):
                     self.visible = False
+                    ExplosionSmall(self.position)
                 ships = []
                 ships = self.collidingWithSprites(Ship1)
                 ships.extend(self.collidingWithSprites(Ship2))
@@ -235,7 +236,20 @@ class Ship2(Ship):
         if len(collides):
             collides[0].explode()
             self.explode()
+
+class ExplosionSmall(Sprite):
     
+    asset = ImageAsset("images/explosion1.png", Frame(0,0,128,128), 10)
+    
+    def __init__(self, position):
+        super().__init__(ExplosionSmall.asset, position)
+        self.image = 0
+        
+    def step(self):
+        self.setImage(self.image)
+        self.image += 1
+        if self.image == 10:
+            self.destroy()
 
 class Spacewar(App):
     
@@ -255,6 +269,12 @@ class Spacewar(App):
         self.Tlast = T
         self.ship1.step(T, dT)
         self.ship2.step(T, dT)
+        explosions = self.getSpritesbyClass(ExplosionSmall)
+        for explosion in explosions:
+            explosion.step()
+        explosions = self.getSpritesbyClass(ExplosionBig)
+        for explosion in explosions:
+            explosion.step()
 
 
 app = Spacewar(0,0)
