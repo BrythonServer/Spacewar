@@ -272,10 +272,11 @@ class Spacewar(App):
         explosions = self.getSpritesbyClass(ExplosionSmall)
         for explosion in explosions:
             explosion.step()
+        """
         explosions = self.getSpritesbyClass(ExplosionBig)
         for explosion in explosions:
             explosion.step()
-
+        """
 
 app = Spacewar(0,0)
 app.run()
