@@ -158,20 +158,21 @@ class Ship(GravitySprite):
         
 
     def controldown(self, event):
-        command = self.keymap[event.key]
-        if command == "left":
-            self.rrate = -Ship.R
-        elif command == "right":
-            self.rrate = Ship.R
-        elif command == "forward":
-            self.thrust = 40.0
-            self.imagex = 1 # start the animated rockets
-            self.setImage(self.imagex)
-        elif command == "fire":
-            for bullet in self.bullets:
-                if bullet.time == 0:
-                    bullet.shoot(self.position, self.shootvector(), 10)
-                    break
+        if self.visible:
+            command = self.keymap[event.key]
+            if command == "left":
+                self.rrate = -Ship.R
+            elif command == "right":
+                self.rrate = Ship.R
+            elif command == "forward":
+                self.thrust = 40.0
+                self.imagex = 1 # start the animated rockets
+                self.setImage(self.imagex)
+            elif command == "fire":
+                for bullet in self.bullets:
+                    if bullet.time == 0:
+                        bullet.shoot(self.position, self.shootvector(), 10)
+                        break
                         
             
     def controlup(self, event):
@@ -233,10 +234,11 @@ class Ship1(Ship):
         
     def step(self, T, dT):
         super().step(T, dT)
-        collides = self.collidingWithSprites(Ship2)
-        if len(collides):
-            collides[0].explode()
-            self.explode()
+        if self.visible:
+            collides = self.collidingWithSprites(Ship2)
+            if len(collides):
+                collides[0].explode()
+                self.explode()
         
 class Ship2(Ship):
     
@@ -249,10 +251,11 @@ class Ship2(Ship):
 
     def step(self, T, dT):
         super().step(T, dT)
-        collides = self.collidingWithSprites(Ship1)
-        if len(collides):
-            collides[0].explode()
-            self.explode()
+        if self.visible:
+            collides = self.collidingWithSprites(Ship1)
+            if len(collides):
+                collides[0].explode()
+                self.explode()
 
 class ExplosionSmall(Sprite):
     
