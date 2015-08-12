@@ -357,7 +357,6 @@ class Spacewar(App):
         self.tsprites['space'].position = (self.width/2, self.height*3/4)
         self.tsprites['left'].position = (self.width/4 - 50, self.height/2)
         self.tsprites['right'].position = (self.width*3/4 - 50, self.height/2)
-        self.Tlast = time()
         self.state = 'instructions'
         self.listenKeyEvent('keydown', 'space', self.space)
 
@@ -367,6 +366,7 @@ class Spacewar(App):
             self.tsprites['left'].visible = False
             self.tsprites['right'].visible = False
             self.state = 'playing'
+            self.Tlast = time()
             evt.consumed = True
         
     def step(self):
