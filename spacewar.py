@@ -124,7 +124,7 @@ class Bullet(GravitySprite):
 class HealthBar:
     
     def __init__(self, indicatorasset, initvalue, position, app):
-        self.sprites = [Sprite(indicatorasset, (0,app.height-150)) for i in range(initvalue)]
+        self.sprites = [Sprite(indicatorasset, (0,app.height-75)) for i in range(initvalue)]
         for s in self.sprites:
             s.scale = 0.4
         width = self.sprites[0].width
@@ -251,9 +251,12 @@ class Ship(GravitySprite):
         self.waitspawn = 5
 
     def reset(self):
-        self.visible = True
-        self.respawnplayed = False
-
+        if not self.health.dead():
+            self.visible = True
+            self.respawnplayed = False
+            self.health.killone()
+        else:
+            self.dead = True
 
             
 class Ship1(Ship):
