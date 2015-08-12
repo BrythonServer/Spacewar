@@ -350,13 +350,13 @@ class Spacewar(App):
         self.sun = Sun((self.width/2, self.height/2))
         self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-120), self.sun)
         self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,120), self.sun)
-        self.tsprites = {k:Sprite(TextAsset(text=v,align='center',style='20px Arial', fill=Color(0xff2222,1))) 
+        self.tsprites = {k:Sprite(TextAsset(text=v,width=100,align='center',style='20px Arial', fill=Color(0xff2222,1))) 
             for k, v in Spacewar.strings.items()}
         self.tsprites['winner'].visible = False
         self.tsprites['tie'].visible = False
         self.tsprites['space'].position = (self.width/2, self.height*3/4)
-        self.tsprites['left'].position = (self.width/4 - 50, self.height/2)
-        self.tsprites['right'].position = (self.width*3/4 - 50, self.height/2)
+        self.tsprites['left'].position = (self.width/4 - 100, self.height/2)
+        self.tsprites['right'].position = (self.width*3/4 - 100, self.height/2)
         self.state = 'instructions'
         self.listenKeyEvent('keydown', 'space', self.space)
 
