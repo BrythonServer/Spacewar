@@ -137,6 +137,7 @@ class HealthBar:
         for s in self.sprites:
             s.x = x
             x += step
+        self.restart()
         
     def restart(self):
         for s in self.sprites:
