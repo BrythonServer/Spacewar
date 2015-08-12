@@ -395,18 +395,15 @@ class Spacewar(App):
             self.Tlast = T
             self.ship1.step(T, dT)
             self.ship2.step(T, dT)
-            print(self.ship1.dead, self.ship2.dead)
             if self.ship1.dead or self.ship2.dead:
-                self.state == 'gameover'
+                self.state = 'gameover'
         elif self.state == 'gameover':
             self.tsprites['space'].visible = True
-            """
             if self.ship1.dead and self.ship2.dead:
                 self.tsprites['tie'].visible = True
             else:
                 self.tsprites['winner'].visible = True
                 self.tsprites['winner'].x = self.width*3/4-50 if self.ship1.dead else self.width/4-50
-            """
 
 app = Spacewar(0,0)
 app.run()
