@@ -354,6 +354,7 @@ class Spacewar(App):
             for k, v in Spacewar.strings.items()}
         self.tsprites['winner'].visible = False
         self.tsprites['tie'].visible = False
+        self.tsprites['tie'].position = (self.width/2 - 100, self.height*3/4)
         self.tsprites['space'].position = (self.width/2 - 100, self.height*3/4)
         self.tsprites['left'].position = (self.width/4 - 50, self.height/2)
         self.tsprites['right'].position = (self.width*3/4 - 50, self.height/2)
@@ -362,14 +363,19 @@ class Spacewar(App):
 
     def space(self, evt):
         if self.state == 'instructions':
-            self.tsprites['space'].visible = False
-            self.tsprites['left'].visible = False
-            self.tsprites['right'].visible = False
+            for t in self.tsprites.values():
+                t.visible = False
             self.state = 'playing'
             self.Tlast = time()
             evt.consumed = True
         
     def step(self):
+        explosions = self.getSpritesbyClass(ExplosionSmall)
+        for explosion in explosions:
+            explosion.step()
+        explosions = self.getSpritesbyClass(ExplosionBig)
+        for explosion in explosions:
+            explosion.step()
         if self.state == 'instructions':
             self.tsprites['space'].visible = True
             self.tsprites['left'].visible = True
@@ -380,14 +386,11 @@ class Spacewar(App):
             self.Tlast = T
             self.ship1.step(T, dT)
             self.ship2.step(T, dT)
-            explosions = self.getSpritesbyClass(ExplosionSmall)
-            for explosion in explosions:
-                explosion.step()
-            explosions = self.getSpritesbyClass(ExplosionBig)
-            for explosion in explosions:
-                explosion.step()
+            if self.ship1.dead or self.ship2.dead:
+                self.state == 'gameover'
         elif self.state == 'gameover':
-            pass
+            if self.ship1.dead and self.ship2.dead:
+                self.tsprites['tie'].visible = True
 
 app = Spacewar(0,0)
 app.run()
