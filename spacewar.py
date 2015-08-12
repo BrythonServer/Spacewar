@@ -158,7 +158,7 @@ class Ship(GravitySprite):
 
     R = 2.0
     bullets = 6
-    healthcount = 1
+    healthcount = 2
     reappearasset = SoundAsset("sounds/reappear.mp3")
     
     def __init__(self, asset, app, position, velocity, sun):
