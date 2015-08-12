@@ -362,13 +362,14 @@ class Spacewar(App):
         self.listenKeyEvent('keydown', 'space', self.space)
 
     def space(self, evt):
-        self.tsprites['space'].visible = False
-        self.tsprites['left'].center = (0.5,0.5)
-        self.tsprites['left'].visible = False
-        self.tsprites['right'].center = (0.5,0.5)
-        self.tsprites['right'].visible = False
-        self.state = 'playing'
-        evt.consumed = True
+        if self.state == 'instructions':
+            self.tsprites['space'].visible = False
+            self.tsprites['left'].center = (0.5,0.5)
+            self.tsprites['left'].visible = False
+            self.tsprites['right'].center = (0.5,0.5)
+            self.tsprites['right'].visible = False
+            self.state = 'playing'
+            evt.consumed = True
         
     def step(self):
         if self.state == 'instructions':
