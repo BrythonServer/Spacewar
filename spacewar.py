@@ -334,6 +334,23 @@ class ExplosionBig(Sprite):
 
 class Spacewar(App):
     
+    strings = {'winner': 'WINNER!',
+        'tie': 'TIE!',
+        'space': 'Press SPACE to play.',
+        'left': 'AWD\nSpace to FIRE',
+        'right': 'Arrow Keys\nEnter to FIRE',
+        }
+    winnerasset = TextAsset(text="WINNER!", style="20px Arial", 
+        fill=Color(0xff2222, 1))
+    tieasset = TextAsset(text="TIE!", style="20px Arial", 
+        fill=Color(0xff2222, 1))
+    pressasset = TextAsset(text="Press SPACE to play.", 
+        style="20px Arial", fill=Color(0xff2222, 1))
+    leftasset = TextAsset(text="AWD\nSpace to FIRE", align='center',
+        style="20px Arial", fill=Color(0xff2222, 1))
+    rightasset = TextAsset(text="Arrow Keys\nEnter to FIRE", align='center', 
+        style="20px Arial", fill=Color(0xff2222, 1))
+
     def __init__(self, width, height):
         super().__init__(width, height)
         for x in range(self.width//Stars.width + 1):
@@ -342,6 +359,8 @@ class Spacewar(App):
         self.sun = Sun((self.width/2, self.height/2))
         self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-120), self.sun)
         self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,120), self.sun)
+        self.tassets = {k:TextAsset(text=v,align='center',style='20px Arial', fill=Color(0xff2222,1)) 
+            for k, v in Spacewar.strings}
         self.Tlast = time()
         
     def step(self):
