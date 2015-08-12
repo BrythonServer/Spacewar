@@ -341,16 +341,6 @@ class Spacewar(App):
         'left': 'AWD\nSpace to FIRE',
         'right': 'Arrow Keys\nEnter to FIRE',
         }
-    winnerasset = TextAsset(text="WINNER!", style="20px Arial", 
-        fill=Color(0xff2222, 1))
-    tieasset = TextAsset(text="TIE!", style="20px Arial", 
-        fill=Color(0xff2222, 1))
-    pressasset = TextAsset(text="Press SPACE to play.", 
-        style="20px Arial", fill=Color(0xff2222, 1))
-    leftasset = TextAsset(text="AWD\nSpace to FIRE", align='center',
-        style="20px Arial", fill=Color(0xff2222, 1))
-    rightasset = TextAsset(text="Arrow Keys\nEnter to FIRE", align='center', 
-        style="20px Arial", fill=Color(0xff2222, 1))
 
     def __init__(self, width, height):
         super().__init__(width, height)
@@ -361,7 +351,7 @@ class Spacewar(App):
         self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-120), self.sun)
         self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,120), self.sun)
         self.tsprites = {k:Sprite(TextAsset(text=v,align='center',style='20px Arial', fill=Color(0xff2222,1))) 
-            for k, v in Spacewar.strings}
+            for k, v in Spacewar.strings.items()}
         self.tsprites['winner'].visible = False
         self.tsprites['space'].position = (self.width/2, self.height*3/4)
         self.tsprites['left'].position = (self.width/4, self.height/2)
