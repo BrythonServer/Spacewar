@@ -172,6 +172,8 @@ class Ship(GravitySprite):
         self.reappear.volume = 40
         self.waitspawn = 0
         self.respawnplayed = False
+        healthpos = 'left' if position[0] < app.width/2 else 'right'
+        self.health = HealthBar(asset, 5, healthpos, app)
 
     def registerKeys(self, keys):
         commands = ["left", "right", "forward", "fire"]
