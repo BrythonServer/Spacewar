@@ -24,7 +24,7 @@ class Sun(Sprite):
         self.fycenter = 0.5
         self.circularCollisionModel()
 
-class Vector(object):
+class Vector:
     
     def __init__(self, x, y):
         self.x = x
@@ -121,11 +121,34 @@ class Bullet(GravitySprite):
             self.time = 0
 
 
-class HealthBar(object):
+class HealthBar:
     
     def __init__(self, indicatorasset, initvalue, position, app):
-        pass
+        self.sprites = [Sprite(indicatorasset) for i in range(initvalue)]
+        width = self.sprites[0].width
+        if position == 'left':
+            x = 50
+            step = width+5
+        else
+            x = app.width - 50 - width
+            step = -width-5
+        for s in self.sprites:
+            s.x = x
+            x += step
         
+    def restart(self):
+        for s in self.sprites:
+            s.visible = True
+        self.count = len(self.sprites)
+        
+    def dead(self):
+        return self.count == 0
+        
+    def killone(self):
+        if self.count > 0:
+            self.count -= 1
+            self.sprites[self.count].visible = False
+
 
 class Ship(GravitySprite):
 
