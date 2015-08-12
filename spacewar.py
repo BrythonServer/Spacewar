@@ -354,11 +354,12 @@ class Spacewar(App):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
         self.sun = Sun((self.width/2, self.height/2))
-        self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-120), self.sun)
-        self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,120), self.sun)
+        self.ship1 = Ship1(self, (self.width/2-140,self.height/2), (0,-120), self.sun)
+        self.ship2 = Ship2(self, (self.width/2+140,self.height/2), (0,120), self.sun)
         self.tsprites = {k:Sprite(TextAsset(text=v, width=200, align='center',style='20px Arial', fill=Color(0xff2222,1))) 
             for k, v in Spacewar.strings.items()}
         self.tsprites['winner'].visible = False
+        self.tsprites['winner'].y = self.height/2
         self.tsprites['tie'].visible = False
         self.tsprites['tie'].position = (self.width/2 - 100, self.height/2 + 50)
         self.tsprites['space'].position = (self.width/2 - 100, self.height*3/4)
