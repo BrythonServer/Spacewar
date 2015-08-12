@@ -129,7 +129,7 @@ class HealthBar:
         if position == 'left':
             x = 50
             step = width+5
-        else
+        else:
             x = app.width - 50 - width
             step = -width-5
         for s in self.sprites:
