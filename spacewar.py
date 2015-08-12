@@ -125,6 +125,7 @@ class HealthBar:
     
     def __init__(self, indicatorasset, initvalue, position, app):
         self.sprites = [Sprite(indicatorasset, (0,app.height-150)) for i in range(initvalue)]
+        map(lambda s: s.scale = 0.4, self.sprites)
         width = self.sprites[0].width
         if position == 'left':
             x = 50
