@@ -158,6 +158,7 @@ class Ship(GravitySprite):
 
     R = 2.0
     bullets = 6
+    healthcount = 1
     reappearasset = SoundAsset("sounds/reappear.mp3")
     
     def __init__(self, asset, app, position, velocity, sun):
@@ -177,7 +178,7 @@ class Ship(GravitySprite):
         self.waitspawn = 0
         self.respawnplayed = False
         healthpos = 'left' if position[0] < app.width/2 else 'right'
-        self.health = HealthBar(asset, 5, healthpos, app)
+        self.health = HealthBar(asset, Ship.healthcount, healthpos, app)
         self.dead = False
 
     def registerKeys(self, keys):
@@ -398,12 +399,13 @@ class Spacewar(App):
                 self.state == 'gameover'
         elif self.state == 'gameover':
             self.tsprites['space'].visible = True
+            """
             if self.ship1.dead and self.ship2.dead:
                 self.tsprites['tie'].visible = True
             else:
                 self.tsprites['winner'].visible = True
                 self.tsprites['winner'].x = self.width*3/4-50 if self.ship1.dead else self.width/4-50
-
+            """
 
 app = Spacewar(0,0)
 app.run()
