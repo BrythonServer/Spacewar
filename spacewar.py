@@ -359,22 +359,41 @@ class Spacewar(App):
         self.sun = Sun((self.width/2, self.height/2))
         self.ship1 = Ship1(self, (self.width/2+140,self.height/2), (0,-120), self.sun)
         self.ship2 = Ship2(self, (self.width/2-140,self.height/2), (0,120), self.sun)
-        self.tassets = {k:TextAsset(text=v,align='center',style='20px Arial', fill=Color(0xff2222,1)) 
+        self.tsprites = {k:Sprite(TextAsset(text=v,align='center',style='20px Arial', fill=Color(0xff2222,1))) 
             for k, v in Spacewar.strings}
+        self.tsprites['winner'].visible = False
+        self.tsprites['space'].position = (self.width/2, self.height*3/4)
+        self.tsprites['left'].position = (self.width/4, self.height/2)
+        self.tsprites['right'].position = (self.width*3/4, self.height/2)
         self.Tlast = time()
+        self.state = 'instructions'
+        self.listenKeyEvent('keydown', 'space', self.space)
+
+    def space(self, evt):
+        self.tsprites['space'].visible = False
+        self.tsprites['left'].visible = False
+        self.tsprites['right'].visible = False
+        self.state = 'playing'
         
     def step(self):
-        T = time()
-        dT = T-self.Tlast
-        self.Tlast = T
-        self.ship1.step(T, dT)
-        self.ship2.step(T, dT)
-        explosions = self.getSpritesbyClass(ExplosionSmall)
-        for explosion in explosions:
-            explosion.step()
-        explosions = self.getSpritesbyClass(ExplosionBig)
-        for explosion in explosions:
-            explosion.step()
+        if self.state == 'instructions':
+            self.tsprites['space'].visible = True
+            self.tsprites['left'].visible = True
+            self.tsprites['right'].visible = True
+        elif self.state == 'playing':
+            T = time()
+            dT = T-self.Tlast
+            self.Tlast = T
+            self.ship1.step(T, dT)
+            self.ship2.step(T, dT)
+            explosions = self.getSpritesbyClass(ExplosionSmall)
+            for explosion in explosions:
+                explosion.step()
+            explosions = self.getSpritesbyClass(ExplosionBig)
+            for explosion in explosions:
+                explosion.step()
+        elif self.state == 'gameover':
+            pass
 
 app = Spacewar(0,0)
 app.run()
