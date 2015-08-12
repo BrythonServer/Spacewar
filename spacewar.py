@@ -395,6 +395,7 @@ class Spacewar(App):
             self.Tlast = T
             self.ship1.step(T, dT)
             self.ship2.step(T, dT)
+            print(self.ship1.dead, self.ship2.dead)
             if self.ship1.dead or self.ship2.dead:
                 self.state == 'gameover'
         elif self.state == 'gameover':
