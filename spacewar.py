@@ -248,19 +248,23 @@ class Ship(GravitySprite):
     def explode(self):
         self.visible = False
         ExplosionBig(self.position)
-        self.position = self.initposition
-        self.vx, self.vy = self.initvelocity
-        self.rotation = self.initrotation
         self.waitspawn = 5
 
     def reset(self):
         if not self.health.dead():
+            self.position = self.initposition
+            self.vx, self.vy = self.initvelocity
+            self.rotation = self.initrotation
             self.visible = True
             self.respawnplayed = False
             self.health.killone()
         else:
             self.dead = True
 
+    def newgame(self):
+        self.health.restart()
+        self.dead = False
+        self.reset()
             
 class Ship1(Ship):
     
@@ -355,7 +359,7 @@ class Spacewar(App):
             for k, v in Spacewar.strings.items()}
         self.tsprites['winner'].visible = False
         self.tsprites['tie'].visible = False
-        self.tsprites['tie'].position = (self.width/2 - 100, self.height*3/4)
+        self.tsprites['tie'].position = (self.width/2 - 100, self.height/2 + 50)
         self.tsprites['space'].position = (self.width/2 - 100, self.height*3/4)
         self.tsprites['left'].position = (self.width/4 - 50, self.height/2)
         self.tsprites['right'].position = (self.width*3/4 - 50, self.height/2)
@@ -363,12 +367,15 @@ class Spacewar(App):
         self.listenKeyEvent('keydown', 'space', self.space)
 
     def space(self, evt):
-        if self.state == 'instructions':
+        if self.state in ['instructions', 'gameover']:
             for t in self.tsprites.values():
                 t.visible = False
             self.state = 'playing'
             self.Tlast = time()
             evt.consumed = True
+            self.ship1.newgame()
+            self.ship2.newgame()
+
         
     def step(self):
         explosions = self.getSpritesbyClass(ExplosionSmall)
@@ -390,8 +397,13 @@ class Spacewar(App):
             if self.ship1.dead or self.ship2.dead:
                 self.state == 'gameover'
         elif self.state == 'gameover':
+            self.tsprites['space'].visible = True
             if self.ship1.dead and self.ship2.dead:
                 self.tsprites['tie'].visible = True
+            else:
+                self.tsprites['winner'].visible = True
+                self.tsprites['winner'].x = self.width*3/4-50 if self.ship1.dead else self.width/4-50
+
 
 app = Spacewar(0,0)
 app.run()
