@@ -353,6 +353,7 @@ class Spacewar(App):
         self.tsprites = {k:Sprite(TextAsset(text=v,align='center',style='20px Arial', fill=Color(0xff2222,1))) 
             for k, v in Spacewar.strings.items()}
         self.tsprites['winner'].visible = False
+        self.tsprites['tie'].visible = False
         self.tsprites['space'].position = (self.width/2, self.height*3/4)
         self.tsprites['left'].position = (self.width/4, self.height/2)
         self.tsprites['right'].position = (self.width*3/4, self.height/2)
@@ -362,9 +363,12 @@ class Spacewar(App):
 
     def space(self, evt):
         self.tsprites['space'].visible = False
+        self.tsprites['left'].center = (0.5,0.5)
         self.tsprites['left'].visible = False
+        self.tsprites['right'].center = (0.5,0.5)
         self.tsprites['right'].visible = False
         self.state = 'playing'
+        evt.consumed = True
         
     def step(self):
         if self.state == 'instructions':
