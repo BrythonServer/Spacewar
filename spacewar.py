@@ -124,7 +124,7 @@ class Bullet(GravitySprite):
 class HealthBar:
     
     def __init__(self, indicatorasset, initvalue, position, app):
-        self.sprites = [Sprite(indicatorasset) for i in range(initvalue)]
+        self.sprites = [Sprite(indicatorasset, (0,app.height-150) for i in range(initvalue)]
         width = self.sprites[0].width
         if position == 'left':
             x = 50
