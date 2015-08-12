@@ -354,9 +354,9 @@ class Spacewar(App):
             for k, v in Spacewar.strings.items()}
         self.tsprites['winner'].visible = False
         self.tsprites['tie'].visible = False
-        self.tsprites['space'].position = (self.width/2, self.height*3/4)
-        self.tsprites['left'].position = (self.width/4 - 100, self.height/2)
-        self.tsprites['right'].position = (self.width*3/4 - 100, self.height/2)
+        self.tsprites['space'].position = (self.width/2 - 100, self.height*3/4)
+        self.tsprites['left'].position = (self.width/4 - 50, self.height/2)
+        self.tsprites['right'].position = (self.width*3/4 - 50, self.height/2)
         self.state = 'instructions'
         self.listenKeyEvent('keydown', 'space', self.space)
 
