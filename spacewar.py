@@ -274,7 +274,7 @@ class Ship1(Ship):
         
     def __init__(self, app, position, velocity, sun):
         super().__init__(Ship1.asset, app, position, velocity, sun)
-        self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
+        self.registerKeys(["a", "d", "w", "space"])
         
     def step(self, T, dT):
         super().step(T, dT)
@@ -292,7 +292,7 @@ class Ship2(Ship):
         
     def __init__(self, app, position, velocity, sun):
         super().__init__(Ship2.asset, app, position, velocity, sun)
-        self.registerKeys(["a", "d", "w", "space"])
+        self.registerKeys(["left arrow", "right arrow", "up arrow", "enter"])
 
     def step(self, T, dT):
         super().step(T, dT)
