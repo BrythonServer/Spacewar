@@ -189,7 +189,7 @@ class Ship(GravitySprite):
 
     def shootvector(self):
         vel = 150
-        xv = vel*math.sin(self.rotation)
+        xv = vel*(-math.sin(self.rotation))
         yv = vel*(-math.cos(self.rotation))
         return xv + self.vx, yv + self.vy
         
@@ -198,9 +198,9 @@ class Ship(GravitySprite):
         if self.visible:
             command = self.keymap[event.key]
             if command == "left":
-                self.rrate = -Ship.R
-            elif command == "right":
                 self.rrate = Ship.R
+            elif command == "right":
+                self.rrate = -Ship.R
             elif command == "forward":
                 self.thrust = 40.0
                 self.imagex = 1 # start the animated rockets
