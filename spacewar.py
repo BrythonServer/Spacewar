@@ -67,7 +67,7 @@ class GravitySprite(Sprite):
         vx, vy = self.vx, self.vy
         At = self.thrust/self.mass
         dt2o2 = dT*dT*0.5
-        self.vx += (Agx + At*math.sin(self.rotation))* dT
+        self.vx += (Agx - At*math.sin(self.rotation))* dT
         self.vy += (Agy - At*math.cos(self.rotation))* dT
         self.x += self.vx * dT + Agx*dt2o2
         self.y += self.vy * dT + Agy*dt2o2
