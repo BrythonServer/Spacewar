@@ -67,10 +67,10 @@ class GravitySprite(Sprite):
         vx, vy = self.vx, self.vy
         At = self.thrust/self.mass
         dt2o2 = dT*dT*0.5
-        self.vx += (Agx - At*math.sin(self.rotation))* dT
-        self.vy += (Agy - At*math.cos(self.rotation))* dT
-        self.x += self.vx * dT + Agx*dt2o2
-        self.y += self.vy * dT + Agy*dt2o2
+        self.vx = self.vx + (Agx - At*math.sin(self.rotation))* dT
+        self.vy = self.vy + (Agy - At*math.cos(self.rotation))* dT
+        self.x = self.x + self.vx * dT + Agx*dt2o2
+        self.y = self.y + self.vy * dT + Agy*dt2o2
 
 
 class Bullet(GravitySprite):
@@ -98,7 +98,7 @@ class Bullet(GravitySprite):
 
     def step(self, T, dT):
         if self.time > 0:
-            self.time -= dT
+            self.time = self.time - dT
             if self.visible:
                 self.nextImage(True)
                 super().step(T, dT)
@@ -137,7 +137,7 @@ class HealthBar:
             step = -width-5
         for s in self.sprites:
             s.x = x
-            x += step
+            x = x + step
         self.restart()
         
     def restart(self):
@@ -150,7 +150,7 @@ class HealthBar:
         
     def killone(self):
         if self.count > 0:
-            self.count -= 1
+            self.count =  self.count - 1
             self.sprites[self.count].visible = False
 
 
@@ -223,7 +223,7 @@ class Ship(GravitySprite):
             
     def step(self, T, dT):
         if self.waitspawn > 0:
-            self.waitspawn -= dT
+            self.waitspawn = self.waitspawn - dT
             if self.waitspawn < 1 and not self.respawnplayed:
                 self.reappear.play()
                 self.respawnplayed = True
@@ -233,11 +233,11 @@ class Ship(GravitySprite):
             bullet.step(T, dT)
         if self.visible:
             super().step(T, dT)
-            self.rotation += self.rrate * dT
+            self.rotation = self.rotation + self.rrate * dT
             if self.collidingWith(self.sun):
                 self.explode()
             if self.thrust != 0.0:
-                self.imagex += 1    # animate the rockets
+                self.imagex = self.imagex + 1    # animate the rockets
                 if self.imagex == 4:
                     self.imagex = 1
                 self.setImage(self.imagex)
@@ -317,7 +317,7 @@ class ExplosionSmall(Sprite):
         
     def step(self):
         self.setImage(self.image//2)  # slow it down
-        self.image += 1
+        self.image = self.image + 1
         if self.image == 20:
             self.destroy()
 
@@ -335,7 +335,7 @@ class ExplosionBig(Sprite):
         
     def step(self):
         self.setImage(self.image//2)  # slow it down
-        self.image += 1
+        self.image = self.image + 1
         if self.image == 50:
             self.destroy()
 
