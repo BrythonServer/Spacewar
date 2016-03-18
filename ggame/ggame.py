@@ -190,8 +190,8 @@ class Frame(object):
     @center.setter
     def center(self, value):
         c = self.center
-        self.x += value[0] - c[0]
-        self.y += value[1] - c[1]
+        self.x = self.x + value[0] - c[0]
+        self.y = self.y + value[1] - c[1]
 
 class _Asset(object):
     """
@@ -241,7 +241,7 @@ class _Asset(object):
             def __next__(self):
                 if self.i ==self.n:
                     raise StopIteration
-                self.i += 1
+                self.i = self.i + 1
                 return self.obj.GFXlist[self.i]
         return Iter(self)
 
@@ -629,7 +629,7 @@ class Sprite(object):
         `ggame.Sprite.nextImage` on the last image will cause the *first*
         image to be loaded.
         """
-        self._index += 1
+        self._index = self._index + 1
         if self._index >= len(self.asset):
             if wrap:
                 self._index = 0
@@ -647,7 +647,7 @@ class Sprite(object):
         `ggame.Sprite.prevImage` on the first image will cause the *last*
         image to be loaded.
         """
-        self._index -= 1
+        self._index = self._index - 1
         if self._index < 0:
             if wrap:
                 self._index = len(self.asset)-1
