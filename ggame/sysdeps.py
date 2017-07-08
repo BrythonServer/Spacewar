@@ -23,9 +23,10 @@ if module_exists('browser') and module_exists('javascript'):
   SND_Sound = JSConstructor(SND.sound)
   
   class GFX_Window(object):
-    
+
     def __init__(self, width, height, onclose):
       self._w = window.open("", "")
+      GFX.skipHello()
       self._stage = JSConstructor(GFX.Container)()
       self.width = width if width != 0 else int(window.innerWidth * 0.9)
       self.height = height if height != 0 else int(window.innerHeight * 0.9)
