@@ -348,8 +348,8 @@ class Spacewar(App):
         'right': 'Arrow Keys\nEnter to FIRE',
         }
 
-    def __init__(self, width, height):
-        super().__init__(width, height)
+    def __init__(self):
+        super().__init__()
         for x in range(self.width//Stars.width + 1):
             for y in range(self.height//Stars.height + 1):
                 Stars((x*Stars.width, y*Stars.height))
@@ -406,6 +406,6 @@ class Spacewar(App):
                 self.tsprites['winner'].visible = True
                 self.tsprites['winner'].x = self.width*3/4-50 if self.ship1.dead else self.width/4-50
 
-app = Spacewar(0,0)
+app = Spacewar()
 app.run()
 
