@@ -14,16 +14,15 @@ class Stars(Sprite):
 
 class Sun(Sprite):
     
-    asset = ImageAsset("images/sun.png")
     width = 80
     height = 76
+    asset = ImageAsset("images/sun.png", Frame(0, 0, width, height))
     
     def __init__(self, position):
         super().__init__(Sun.asset, position)
         self.mass = 30*1000
         self.fxcenter = 0.5
         self.fycenter = 0.5
-        self.circularCollisionModel()
 
 class Vector:
     
@@ -83,7 +82,6 @@ class Bullet(GravitySprite):
         self.visible = False
         self.firing = False
         self.time = 0
-        self.circularCollisionModel()
         self.pew = Sound(Bullet.pewasset)
         self.pew.volume = 10
         
@@ -171,7 +169,6 @@ class Ship(GravitySprite):
         self.initrotation = self.rotation
         self.app = app
         self.mass = 1.0
-        self.circularCollisionModel()
         self.imagex = 0
         self.reappear = Sound(Ship.reappearasset)
         self.reappear.volume = 40
