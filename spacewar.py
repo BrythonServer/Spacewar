@@ -1,4 +1,4 @@
-from ggame import App, Sprite, ImageAsset, Frame
+from ggame import App, Sprite, ImageAsset, Frame, CircleAsset
 from ggame import SoundAsset, Sound, TextAsset, Color
 import math
 from time import time
@@ -19,7 +19,7 @@ class Sun(Sprite):
     asset = ImageAsset("images/sun.png", Frame(0, 0, width, height))
     
     def __init__(self, position):
-        super().__init__(Sun.asset, position)
+        super().__init__(Sun.asset, position, CircleAsset(32))
         self.mass = 30*1000
         self.fxcenter = 0.5
         self.fycenter = 0.5
@@ -44,8 +44,8 @@ class GravitySprite(Sprite):
     
     G = 50.0
 
-    def __init__(self, asset, position, velocity, sun):
-        super().__init__(asset, position)
+    def __init__(self, asset, collisionasset, position, velocity, sun):
+        super().__init__(asset, position, collisionasset)
         self.vx = velocity[0]
         self.vy = velocity[1]
         self.sun = sun
@@ -75,10 +75,11 @@ class GravitySprite(Sprite):
 class Bullet(GravitySprite):
     
     asset = ImageAsset("images/blast.png", Frame(0,0,8,8), 8)
+    collisionasset = CircleAsset(4)
     pewasset = SoundAsset("sounds/pew1.mp3")
     
     def __init__(self, app, sun):
-        super().__init__(Bullet.asset, (0,0), (0,0), sun)
+        super().__init__(Bullet.asset, Bullet.collisionasset, (0,0), (0,0), sun)
         self.visible = False
         self.firing = False
         self.time = 0
@@ -95,29 +96,25 @@ class Bullet(GravitySprite):
         self.pew.play()
 
     def step(self, T, dT):
-        if self.time > 0:
-            self.time = self.time - dT
-            if self.visible:
+        self.time = self.time - dT
+        if self.visible:
+            if self.time <= 0:
+                self.visible = False
+            else:
                 self.nextImage(True)
                 super().step(T, dT)
                 if self.collidingWith(self.sun):
                     self.visible = False
                     ExplosionSmall(self.position)
-                ships = []
-                ships = self.collidingWithSprites(Ship1)
-                ships.extend(self.collidingWithSprites(Ship2))
-                if len(ships):
-                    if not self.firing and ships[0].visible:
-                        ships[0].explode()
-                        self.visible = False
-                elif self.firing:
-                    self.firing = False
-            
-                
-        else:
-            if self.visible:
-                self.visible = False
-            self.time = 0
+                else:
+                    ships = self.collidingWithSprites(Ship1)
+                    ships.extend(self.collidingWithSprites(Ship2))
+                    for ship in ships:
+                        if not self.firing and ship.visible:
+                            ship.explode()
+                            self.visible = False
+                    if not ships:
+                        self.firing = False
 
 
 class HealthBar:
@@ -163,7 +160,8 @@ class Ship(GravitySprite):
         self.bullets = []
         for i in range(Ship.bullets):
             self.bullets.append(Bullet(app, sun))
-        super().__init__(asset, position, velocity, sun)
+        collisionasset = CircleAsset(40) 
+        super().__init__(asset, collisionasset, position, velocity, sun)
         self.initposition = position
         self.initvelocity = self.vx, self.vy
         self.initrotation = self.rotation
@@ -204,7 +202,7 @@ class Ship(GravitySprite):
                 self.setImage(self.imagex)
             elif command == "fire":
                 for bullet in self.bullets:
-                    if bullet.time == 0:
+                    if bullet.time <= 0:
                         bullet.shoot(self.position, self.shootvector(), 10)
                         break
                         
@@ -256,6 +254,8 @@ class Ship(GravitySprite):
             self.visible = True
             self.respawnplayed = False
             self.health.killone()
+            for bullet in self.bullets:
+                bullet.time = 0
         else:
             self.dead = True
 
