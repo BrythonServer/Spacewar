@@ -230,7 +230,7 @@ class Ship(GravitySprite):
             self.rotation = self.rotation + self.rrate * dT
             if self.collidingWith(self.sun):
                 print("colliding with sun")
-                print("sun: xn,xx,yn,yx", sun.xmin, sun.xmax, sun.ymin, sun.ymax)
+                print("sun: xn,xx,yn,yx", self.sun.xmin, self.sun.xmax, self.sun.ymin, self.sun.ymax)
                 print("self: xn,xx,yn,yx", self.xmin, self.xmax, self.ymin, self.ymax)
                 self.explode()
             if self.thrust != 0.0:
