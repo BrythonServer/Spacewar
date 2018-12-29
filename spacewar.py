@@ -1,4 +1,4 @@
-from ggame import App, Sprite, ImageAsset, Frame
+from ggame import App, Sprite, ImageAsset, Frame, CircleAsset
 from ggame import SoundAsset, Sound, TextAsset, Color
 import math
 from time import time
@@ -44,8 +44,8 @@ class GravitySprite(Sprite):
     
     G = 50.0
 
-    def __init__(self, asset, position, velocity, sun):
-        super().__init__(asset, position)
+    def __init__(self, asset, collisionasset, position, velocity, sun):
+        super().__init__(asset, position, collisionasset)
         self.vx = velocity[0]
         self.vy = velocity[1]
         self.sun = sun
@@ -159,7 +159,8 @@ class Ship(GravitySprite):
         self.bullets = []
         for i in range(Ship.bullets):
             self.bullets.append(Bullet(app, sun))
-        super().__init__(asset, position, velocity, sun)
+        collisionasset = CircleAsset(40) 
+        super().__init__(asset, collisionasset, position, velocity, sun)
         self.initposition = position
         self.initvelocity = self.vx, self.vy
         self.initrotation = self.rotation
