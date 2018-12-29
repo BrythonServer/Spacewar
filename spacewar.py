@@ -254,6 +254,8 @@ class Ship(GravitySprite):
             self.visible = True
             self.respawnplayed = False
             self.health.killone()
+            for bullet in self.bullets:
+                bullet.time = 0
         else:
             self.dead = True
 
