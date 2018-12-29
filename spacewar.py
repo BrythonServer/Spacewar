@@ -95,29 +95,26 @@ class Bullet(GravitySprite):
         self.pew.play()
 
     def step(self, T, dT):
-        if self.time > 0:
+        if self.visible:
             self.time = self.time - dT
-            if self.visible:
+            if self.time < 0:
+                self.visible = False
+            else:
                 self.nextImage(True)
                 super().step(T, dT)
                 if self.collidingWith(self.sun):
                     self.visible = False
                     ExplosionSmall(self.position)
-                ships = []
-                ships = self.collidingWithSprites(Ship1)
-                ships.extend(self.collidingWithSprites(Ship2))
-                if len(ships):
-                    if not self.firing and ships[0].visible:
-                        ships[0].explode()
-                        self.visible = False
-                elif self.firing:
-                    self.firing = False
-            
-                
-        else:
-            if self.visible:
-                self.visible = False
-            self.time = 0
+                else:
+                    ships = self.collidingWithSprites(Ship1)
+                    ships.extend(self.collidingWithSprites(Ship2))
+                    for ship in ships:
+                        if not self.firing:
+                            ship.explode()
+                            self.visible = False
+                            break
+                    else:
+                        self.firing = False
 
 
 class HealthBar:
