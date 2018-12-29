@@ -110,7 +110,6 @@ class Bullet(GravitySprite):
                     ships.extend(self.collidingWithSprites(Ship2))
                     for ship in ships:
                         if not self.firing:
-                            print("bullet collision")
                             ship.explode()
                             self.visible = False
                     if not ships:
@@ -229,10 +228,6 @@ class Ship(GravitySprite):
             super().step(T, dT)
             self.rotation = self.rotation + self.rrate * dT
             if self.collidingWith(self.sun):
-                print("colliding with sun")
-                print("sun: xn,xx,yn,yx", self.sun.xmin, self.sun.xmax, self.sun.ymin, self.sun.ymax)
-                print("self: x,y", self.x, self.y)
-                print("self: xn,xx,yn,yx", self.xmin, self.xmax, self.ymin, self.ymax)
                 self.explode()
             if self.thrust != 0.0:
                 self.imagex = self.imagex + 1    # animate the rockets
@@ -241,7 +236,6 @@ class Ship(GravitySprite):
                 self.setImage(self.imagex)
             if (self.x < -100 or self.x > self.app.width + 100 or
                 self.y < -100 or self.y > self.app.height + 100):
-                print("outside of visible area")
                 self.explode()
         
 
@@ -281,7 +275,6 @@ class Ship1(Ship):
             collides = self.collidingWithSprites(Ship2)
             if len(collides):
                 if collides[0].visible:
-                    print("1 colliding with 2")
                     collides[0].explode()
                     self.explode()
         
@@ -300,7 +293,6 @@ class Ship2(Ship):
             collides = self.collidingWithSprites(Ship1)
             if len(collides):
                 if collides[0].visible:
-                    print("2 colliding with 1")
                     collides[0].explode()
                     self.explode()
 
