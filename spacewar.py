@@ -110,7 +110,7 @@ class Bullet(GravitySprite):
                     ships = self.collidingWithSprites(Ship1)
                     ships.extend(self.collidingWithSprites(Ship2))
                     for ship in ships:
-                        if not self.firing:
+                        if not self.firing and ship.visible:
                             ship.explode()
                             self.visible = False
                     if not ships:
