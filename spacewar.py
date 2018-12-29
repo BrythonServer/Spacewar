@@ -96,9 +96,9 @@ class Bullet(GravitySprite):
         self.pew.play()
 
     def step(self, T, dT):
+        self.time = self.time - dT
         if self.visible:
-            self.time = self.time - dT
-            if self.time < 0:
+            if self.time <= 0:
                 self.visible = False
             else:
                 self.nextImage(True)
