@@ -19,7 +19,7 @@ class Sun(Sprite):
     asset = ImageAsset("images/sun.png", Frame(0, 0, width, height))
     
     def __init__(self, position):
-        super().__init__(Sun.asset, position, CircleAsset(25))
+        super().__init__(Sun.asset, position, CircleAsset(32))
         self.mass = 30*1000
         self.fxcenter = 0.5
         self.fycenter = 0.5
