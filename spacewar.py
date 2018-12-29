@@ -19,7 +19,7 @@ class Sun(Sprite):
     asset = ImageAsset("images/sun.png", Frame(0, 0, width, height))
     
     def __init__(self, position):
-        super().__init__(Sun.asset, position)
+        super().__init__(Sun.asset, position, CircleAsset(40))
         self.mass = 30*1000
         self.fxcenter = 0.5
         self.fycenter = 0.5
@@ -75,10 +75,11 @@ class GravitySprite(Sprite):
 class Bullet(GravitySprite):
     
     asset = ImageAsset("images/blast.png", Frame(0,0,8,8), 8)
+    collisionasset = CircleAsset(4)
     pewasset = SoundAsset("sounds/pew1.mp3")
     
     def __init__(self, app, sun):
-        super().__init__(Bullet.asset, (0,0), (0,0), sun)
+        super().__init__(Bullet.asset, Bullet.collisionasset, (0,0), (0,0), sun)
         self.visible = False
         self.firing = False
         self.time = 0
